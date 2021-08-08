@@ -1,6 +1,6 @@
 package indi.mat.work.project.controller;
 
-import indi.mat.work.project.service.UserService;
+import indi.mat.work.project.sample.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

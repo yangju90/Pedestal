@@ -1,6 +1,6 @@
-package indi.mat.work.project.service;
+package indi.mat.work.project.sample.service;
 
-import indi.mat.work.project.bean.User;
+import indi.mat.work.project.sample.bean.User;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

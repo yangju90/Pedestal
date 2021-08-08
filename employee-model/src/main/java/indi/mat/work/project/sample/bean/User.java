@@ -1,4 +1,4 @@
-package indi.mat.work.project.bean;
+package indi.mat.work.project.sample.bean;
 
 public class User {
 
