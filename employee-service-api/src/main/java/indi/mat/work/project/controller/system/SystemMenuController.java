@@ -22,4 +22,16 @@ public class SystemMenuController {
         return "删除成功！";
     }
 
+    @RequestMapping("/deleteByName")
+    public Object delete(String name) {
+        systemMenuService.deleteName(name);
+        return "删除成功！";
+    }
+
+
+    @RequestMapping("/get")
+    public Object get(String name) {
+        return systemMenuService.get(name);
+    }
+
 }

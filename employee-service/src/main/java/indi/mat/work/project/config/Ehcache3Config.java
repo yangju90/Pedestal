@@ -1,7 +1,39 @@
+package indi.mat.work.project.config;
+
+import indi.mat.work.project.vo.ext.RoleCacheInfo;
+import org.ehcache.config.CacheConfiguration;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.ExpiryPolicyBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.ehcache.config.units.EntryUnit;
+import org.ehcache.jsr107.Eh107Configuration;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.jcache.JCacheCacheManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.cache.CacheManager;
+import javax.cache.Caching;
+import javax.cache.spi.CachingProvider;
+import java.time.Duration;
+import java.util.List;
+
 @Configuration
 @EnableCaching
-public class EhcacheConfig extends CachingConfigurerSupport {
-    //https://www.ehcache.org/documentation/3.0/107.html
+public class Ehcache3Config extends CachingConfigurerSupport {
+
+    /**
+     * Ehcache 3.x
+     * 参考的资料链接，核心考虑JSR107
+     * 自动注入实现了JCacheCacheManager，JCacheCacheManager提供了javax.cache.CacheManager的实现
+     *
+     * https://www.ehcache.org/documentation/3.0/107.html
+     * https://blog.csdn.net/Damien_J_Scott/article/details/117422287?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-13.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-13.control
+     *
+     * @return
+     */
+
 
     @Bean
     public JCacheCacheManager jCacheCacheManager(){
@@ -9,9 +41,9 @@ public class EhcacheConfig extends CachingConfigurerSupport {
         CacheManager cacheManager = provider.getCacheManager();
         cacheManager.createCache("defaultCache",
                 Eh107Configuration.fromEhcacheCacheConfiguration(defaultCache()));
-        cacheManager.createCache(CacheManagerNameConstant.SYSTEM_MENU_CACHE, Eh107Configuration.fromEhcacheCacheConfiguration(cacheDefine(String.class, List.class,2L, 60L)));
+        cacheManager.createCache("systemMenu", Eh107Configuration.fromEhcacheCacheConfiguration(cacheDefine(String.class, List.class,2L, 60L)));
         cacheManager.createCache("role", Eh107Configuration.fromEhcacheCacheConfiguration(cacheDefine(Long.class, RoleCacheInfo.class, 2L, 60L)));
-        cacheManager.createCache("system", Eh107Configuration.fromEhcacheCacheConfiguration(cacheDefine(String.class, SystemMenu.class, 2L, 2L)));
+        cacheManager.createCache("user", Eh107Configuration.fromEhcacheCacheConfiguration(cacheDefine(Object.class, Object.class, 2L, 60L)));
 
         return new JCacheCacheManager(cacheManager);
     }

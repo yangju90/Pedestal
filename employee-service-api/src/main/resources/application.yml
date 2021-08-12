@@ -1,4 +1,4 @@
-spring:
-  cache:
-    ehcache:
-      config: classpath:ehcache.xml
+#spring:
+#  cache:
+#    ehcache:
+#      config: classpath:indi/mat/work/project/config/ehcache.xml
