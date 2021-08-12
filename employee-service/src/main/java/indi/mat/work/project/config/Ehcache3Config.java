@@ -1,6 +1,7 @@
 @Configuration
 @EnableCaching
 public class EhcacheConfig extends CachingConfigurerSupport {
+    //https://www.ehcache.org/documentation/3.0/107.html
 
     @Bean
     public JCacheCacheManager jCacheCacheManager(){
