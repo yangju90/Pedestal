@@ -30,7 +30,9 @@ public class Ehcache3Config extends CachingConfigurerSupport {
      *
      * https://www.ehcache.org/documentation/3.0/107.html
      * https://blog.csdn.net/Damien_J_Scott/article/details/117422287?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-13.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-13.control
-     *
+     * 
+     * 配置参数参考
+     * https://blog.csdn.net/qq_28988969/article/details/78210873  
      * @return
      */
 
