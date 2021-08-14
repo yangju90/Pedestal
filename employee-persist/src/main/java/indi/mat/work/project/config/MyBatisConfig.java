@@ -1,6 +1,8 @@
 @Configuration
 @MapperScan("com.newegg.staffing.persist.*")
 public class MyBatisConfig {
+    
+    // https://www.cnblogs.com/dogdogwang/p/13019060.html
 
     @Bean
     public ModelInterceptor modelInterceptor() {
