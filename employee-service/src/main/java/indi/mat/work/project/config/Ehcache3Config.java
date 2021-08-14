@@ -37,17 +37,28 @@ public class Ehcache3Config extends CachingConfigurerSupport {
      */
 
 
-    @Bean
-    public JCacheCacheManager jCacheCacheManager(){
-        CachingProvider provider = Caching.getCachingProvider();
-        CacheManager cacheManager = provider.getCacheManager();
-        cacheManager.createCache("defaultCache",
-                Eh107Configuration.fromEhcacheCacheConfiguration(defaultCache()));
-        cacheManager.createCache("systemMenu", Eh107Configuration.fromEhcacheCacheConfiguration(cacheDefine(String.class, List.class,2L, 60L)));
-        cacheManager.createCache("role", Eh107Configuration.fromEhcacheCacheConfiguration(cacheDefine(Long.class, RoleCacheInfo.class, 2L, 60L)));
-        cacheManager.createCache("user", Eh107Configuration.fromEhcacheCacheConfiguration(cacheDefine(Object.class, Object.class, 2L, 60L)));
+    private static final Logger logger = LoggerFactory.getLogger(EhcacheConfig.class);
 
-        return new JCacheCacheManager(cacheManager);
+    @Autowired
+    private CacheAttribute cacheAttribute;
+
+
+    @Override
+    @Bean
+    public CacheManager cacheManager() {
+        return new JCacheCacheManager(jCacheCacheManager());
+    }
+
+    public javax.cache.CacheManager jCacheCacheManager(){
+        CachingProvider provider = Caching.getCachingProvider();
+        javax.cache.CacheManager cacheManager = provider.getCacheManager();
+        createCache(cacheManager, "defaultCache", defaultCache());
+        createCache(cacheManager, CacheManagerNameConstant.SYSTEM_MENU_CACHE, cacheDefine(200L, 60L));
+        List<String> names = cacheAttribute.getNameList();
+        for(String name : names) {
+            createCache(cacheManager, name, cacheDefine(cacheAttribute.getMaxHeap(), cacheAttribute.getTti()));
+        }
+        return cacheManager;
     }
 
 
@@ -57,14 +68,14 @@ public class Ehcache3Config extends CachingConfigurerSupport {
                 .newCacheConfigurationBuilder(String.class, String.class, ResourcePoolsBuilder.newResourcePoolsBuilder()
                         .heap(10000L, EntryUnit.ENTRIES).build())
                 .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ZERO))
-                .withExpiry(ExpiryPolicyBuilder.timeToIdleExpiration(Duration.ofSeconds(600L)))
+                .withExpiry(ExpiryPolicyBuilder.timeToIdleExpiration(Duration.ofSeconds(3600L)))
                 .build();
         return cacheConfiguration;
     }
 
-    private CacheConfiguration cacheDefine(Class k, Class v, Long entriesSize, Long seconds) {
-        CacheConfiguration<String, String> cacheConfiguration = CacheConfigurationBuilder
-                .newCacheConfigurationBuilder(k, v, ResourcePoolsBuilder.newResourcePoolsBuilder()
+    private CacheConfiguration cacheDefine(Long entriesSize, Long seconds) {
+        CacheConfiguration<Object, Object> cacheConfiguration = CacheConfigurationBuilder
+                .newCacheConfigurationBuilder(Object.class, Object.class, ResourcePoolsBuilder.newResourcePoolsBuilder()
                         .heap(entriesSize, EntryUnit.ENTRIES)
                         .build())
                 .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ZERO))
@@ -74,9 +85,13 @@ public class Ehcache3Config extends CachingConfigurerSupport {
         return cacheConfiguration;
     }
 
-
-    @Override
-    public org.springframework.cache.CacheManager cacheManager() {
-        return jCacheCacheManager();
+    private void createCache(javax.cache.CacheManager cacheManager, String name, CacheConfiguration configuration){
+        // 这里的判断主要为了 Spring boot test 测试时，会多次Create同一个name的CacheManager，判定
+        if(cacheManager.getCache(name) == null) {
+            cacheManager.createCache(name,
+                    Eh107Configuration.fromEhcacheCacheConfiguration(configuration));
+        }else{
+            logger.info("A Cache named [" +name+ "] already exists");
+        }
     }
 }
