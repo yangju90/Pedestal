@@ -1,7 +1,7 @@
 -- create database if not exists employee default charset utf8mb4 collate utf8mb4_general_ci;
 -- use employee;
 
-
+drop table if exists `indi_account_role`;
 
 create table if not exists `indi_account_role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '逻辑主键',
