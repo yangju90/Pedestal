@@ -13,6 +13,10 @@ spring:
 #      config: classpath:indi/mat/work/project/config/ehcache.xml
 
 
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 javax:
   cache:
     cacheName: user,role
