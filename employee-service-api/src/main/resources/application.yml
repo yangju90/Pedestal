@@ -1,4 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: sa
+    data: classpath:sql/data.sql
+    schema: classpath:sql/db_ddl.sql
+
 #spring:
 #  cache:
 #    ehcache:
 #      config: classpath:indi/mat/work/project/config/ehcache.xml
+
+
+javax:
+  cache:
+    cacheName: user,role
+    maxHeap: 2000
+    tti: 600
+
+
+# yml 文件在IDEA中build不会复制到target文件中， 但是Maven compile 可以，考虑rebuild 项目以Maven project形式（Maven -> reimport）

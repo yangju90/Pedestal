@@ -1,20 +1,11 @@
 package indi.mat.work.project;
 
-import static org.junit.Assert.assertTrue;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import org.junit.Test;
-
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
-    @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+@SpringBootApplication
+public class AppTest {
+    public static void main( String[] args ) {
+        SpringApplication.run(AppTest.class, args);
     }
 }

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>employee</artifactId>
         <groupId>indi.mat.work.project</groupId>
-        <version>${project.version}</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -16,6 +16,13 @@
     <url>http://www.example.com</url>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis.plus}</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

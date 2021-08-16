@@ -5,7 +5,7 @@
     <parent>
         <artifactId>employee</artifactId>
         <groupId>indi.mat.work.project</groupId>
-        <version>${project.version}</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -22,7 +22,6 @@
             <artifactId>employee-persist</artifactId>
             <version>${persist.version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -47,12 +46,6 @@
             <artifactId>cache-api</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>

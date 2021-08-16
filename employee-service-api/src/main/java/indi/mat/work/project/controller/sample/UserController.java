@@ -12,6 +12,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+    @RequestMapping("/get")
+    public Object getById() {
+        return userService.get();
+    }
+
     @RequestMapping("/getById")
     public Object getById(Integer id) {
         return userService.getById(id);

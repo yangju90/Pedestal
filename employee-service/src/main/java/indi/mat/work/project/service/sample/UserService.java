@@ -1,8 +1,12 @@
 package indi.mat.work.project.service.sample;
 
-import indi.mat.work.project.sample.bean.User;
+import indi.mat.work.project.model.sample.User;
+
+import java.util.List;
 
 public interface UserService {
+
+    public List<User> get();
 
     /**
      * 删除id用户

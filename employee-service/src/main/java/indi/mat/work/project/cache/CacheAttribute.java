@@ -1,3 +1,5 @@
+package indi.mat.work.project.cache;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -5,8 +7,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@ConfigurationProperties("javax.cache")
 @Component
+@ConfigurationProperties("javax.cache")
 public class CacheAttribute {
 
     private String cacheName;

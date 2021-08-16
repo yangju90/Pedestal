@@ -4,6 +4,13 @@ spring:
     url: jdbc:h2:mem:test;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password: sa
+    data: ../../../../sql/data.sql
     schema:
       - ../../../../sql/clean.sql
-      - ../../../../sql/schema.sql
+      - ../../../../sql/db_ddl.sql
+
+javax:
+  cache:
+    cacheName: user
+    maxHeap: 2000
+    tti: 600

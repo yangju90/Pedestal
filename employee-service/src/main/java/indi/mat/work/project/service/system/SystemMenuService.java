@@ -1,6 +1,6 @@
 package indi.mat.work.project.service.system;
 
-import indi.mat.work.project.sample.bean.User;
+import indi.mat.work.project.model.sample.User;
 
 public interface SystemMenuService {
 
