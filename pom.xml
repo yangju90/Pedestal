@@ -13,6 +13,7 @@
         <service.version>0.0.1-SNAPSHOT</service.version>
         <persist.version>0.0.1-SNAPSHOT</persist.version>
         <mybatis.plus>3.4.3.1</mybatis.plus>
+        <sharding.jdbc>4.1.1</sharding.jdbc>
     </properties>
 
     <groupId>indi.mat.work.project</groupId>
@@ -45,6 +46,12 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${sharding.jdbc}</version>
             </dependency>
 
             <dependency>
