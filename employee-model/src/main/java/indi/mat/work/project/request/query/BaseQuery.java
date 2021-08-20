@@ -1,3 +1,19 @@
+package indi.mat.work.project.request.query;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import indi.mat.work.project.exception.PageException;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class BaseQuery<T>{
 
     private Long size;
@@ -31,7 +47,7 @@ public abstract class BaseQuery<T>{
         return (LambdaQueryWrapper)wrapper;
     }
 
-     public  IPage<T> page() {
+     public IPage<T> page() {
         if(size == null){
             size = 20L;
         }

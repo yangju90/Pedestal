@@ -1,4 +1,4 @@
-package indi.mat.work.project.vo.user;
+package indi.mat.work.project.response.vo.user;
 
 public class RolePermissionInfo {
     private Long roleId;

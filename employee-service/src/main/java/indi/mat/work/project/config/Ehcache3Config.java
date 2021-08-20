@@ -2,7 +2,6 @@ package indi.mat.work.project.config;
 
 import indi.mat.work.project.cache.CacheAttribute;
 import indi.mat.work.project.cache.CacheManagerNameConstant;
-import indi.mat.work.project.vo.ext.RoleCacheInfo;
 import org.ehcache.config.CacheConfiguration;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;

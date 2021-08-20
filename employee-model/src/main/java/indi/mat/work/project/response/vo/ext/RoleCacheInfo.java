@@ -1,7 +1,7 @@
-package indi.mat.work.project.vo.ext;
+package indi.mat.work.project.response.vo.ext;
 
-import indi.mat.work.project.vo.system.MenuTree;
-import indi.mat.work.project.vo.user.RolePermissionInfo;
+import indi.mat.work.project.response.vo.system.MenuTree;
+import indi.mat.work.project.response.vo.user.RolePermissionInfo;
 
 import java.util.List;
 

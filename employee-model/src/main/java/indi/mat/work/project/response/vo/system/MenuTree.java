@@ -1,4 +1,4 @@
-package indi.mat.work.project.vo.system;
+package indi.mat.work.project.response.vo.system;
 
 import java.util.List;
 
