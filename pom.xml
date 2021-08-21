@@ -10,6 +10,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <model.vesion>0.0.1-SNAPSHOT</model.vesion>
         <common.version>0.0.1-SNAPSHOT</common.version>
+             <pagehelper.version>5.2.1</pagehelper.version>
         <service.version>0.0.1-SNAPSHOT</service.version>
         <persist.version>0.0.1-SNAPSHOT</persist.version>
         <mybatis.plus>3.4.3.1</mybatis.plus>
@@ -47,6 +48,12 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus}</version>
             </dependency>
+                 
+            <dependency>
+                  <groupId>com.github.pagehelper</groupId>
+                  <artifactId>pagehelper</artifactId>
+                  <version>${pagehelper.version}</version>
+         </dependency>
 
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
