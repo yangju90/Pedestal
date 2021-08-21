@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import indi.mat.work.project.exception.PageException;
+import com.github.pagehelper.PageException;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
