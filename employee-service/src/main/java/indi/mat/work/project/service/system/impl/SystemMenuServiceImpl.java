@@ -1,5 +1,6 @@
 package indi.mat.work.project.service.system.impl;
 
+import indi.mat.work.project.annotation.Favorite;
 import indi.mat.work.project.service.system.SystemMenuService;
 import indi.mat.work.project.model.sample.User;
 import org.springframework.cache.annotation.CacheEvict;

@@ -10,6 +10,7 @@ public class User {
     private String name;
     private String email;
     private Integer age;
+    private Boolean favorite;
 
     public User() {}
 
@@ -50,5 +51,13 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
     }
 }
