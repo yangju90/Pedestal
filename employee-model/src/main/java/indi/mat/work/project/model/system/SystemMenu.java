@@ -1,7 +1,9 @@
 package indi.mat.work.project.model.system;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import indi.mat.work.project.model.BaseModel;
 
+@TableName("indi_system_menu")
 public class SystemMenu extends BaseModel {
 
     // 系统菜单编码
