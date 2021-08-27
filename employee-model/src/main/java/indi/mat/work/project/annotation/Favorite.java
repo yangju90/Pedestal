@@ -9,5 +9,8 @@ import java.lang.annotation.*;
 public @interface Favorite {
     String method() default "";
 
-    Class<?> type() default java.lang.Object.class;
+    /**
+     * FavoritesBusinessType 类型
+     */
+    String type() default "COMPANY";
 }
