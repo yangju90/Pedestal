@@ -1,6 +1,8 @@
 package indi.mat.work.project.aspect;
 
-import indi.mat.work.project.annotation.Favorite;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import indi.mat.work.project.annotation.Favorites;
+import indi.mat.work.project.service.system.ISystemFavoritesInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -9,21 +11,25 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Aspect
 @Component
-public class FavoriteAspect {
+public class FavoritesAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(FavoritesAspect.class);
 
     @Autowired
     ISystemFavoritesInfoService service;
 
-    @Pointcut("@annotation(com.newegg.staffing.annotation.Favorites)")
+    @Pointcut("@annotation(indi.mat.work.project.annotation.Favorites)")
     private void fillFavoriteState() {
     }
 
@@ -35,7 +41,9 @@ public class FavoriteAspect {
         Method method = methodSignature.getMethod();
         Favorites favorite = method.getAnnotation(Favorites.class);
         String m = StringUtils.isBlank(favorite.method()) ? "setFavorites" : favorite.method();
-        Long accountId = WebUtil.currentUser().getUserInfo().getId();
+//        Long accountId = WebUtil.currentUser().getUserInfo().getId();
+        Long accountId = 0L;
+
         Map<Long, Long> map = service.getBusinessTypeFavorites(favorite.type(), accountId).stream().collect(Collectors.toMap(x -> x.getFavoriteId(), x -> x.getId()));
         if (map.size() != 0) {
             if (obj instanceof IPage) {

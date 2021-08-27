@@ -1,12 +1,12 @@
+package indi.mat.work.project.annotation.validator;
+
+import indi.mat.work.project.annotation.AssertBoolean;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * <p>
- * 公司财务信息表 前端控制器
- * </p>
- *
- * @author Marvin
+ * @author Mat
  * @since 2021-08-27
  */
 public class BooleanValidator implements ConstraintValidator<AssertBoolean, Object> {

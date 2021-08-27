@@ -1,3 +1,7 @@
+package indi.mat.work.project.annotation;
+
+import indi.mat.work.project.annotation.validator.BooleanValidator;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;
@@ -9,11 +13,8 @@ import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>
- * 公司财务信息表 前端控制器
- * </p>
  *
- * @author Marvin
+ * @author Mat
  * @since 2021-08-27
  */
 @Documented

@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Favorite {
+public @interface Favorites {
     String method() default "";
 
     /**
