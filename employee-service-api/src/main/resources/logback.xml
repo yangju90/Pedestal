@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+<!--                {"timestamp": "%date{yyyy-MM-dd HH:mm:ss.SSS}", "log_level": "%-5level", "thread": "%thread", "class_name": "%class","line_number": "%line", "message": "%message"}%n-->
+                {"timestamp": "%date{yyyy-MM-dd HH:mm:ss.SSS, UTC}", "log_level": "%-5level", "thread": "%thread", "class_name": "%class","line_number": "%line", "message": "%message"}%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
