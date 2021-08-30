@@ -1,7 +1,9 @@
 package indi.mat.work.project.model.system;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import indi.mat.work.project.model.BaseModel;
 
+@TableName("indi_system_favorites_info")
 public class SystemFavoritesInfo extends BaseModel {
 
     private Long accountId;

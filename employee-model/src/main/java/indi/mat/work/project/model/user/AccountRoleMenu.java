@@ -1,15 +1,17 @@
 package indi.mat.work.project.model.user;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import indi.mat.work.project.model.BaseModel;
 
-public class AccountRole extends BaseModel {
+@TableName("indi_account_role")
+public class AccountRoleMenu extends BaseModel {
     private Long roleId;
     private String menuCode;
     private Integer functionCode;
 
-    public AccountRole(){}
+    public AccountRoleMenu(){}
 
-    public AccountRole(Long roleId, String menuCode, Integer functionCode) {
+    public AccountRoleMenu(Long roleId, String menuCode, Integer functionCode) {
         this.roleId = roleId;
         this.menuCode = menuCode;
         this.functionCode = functionCode;

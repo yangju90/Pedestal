@@ -2,7 +2,7 @@ package indi.mat.work.project.aspect;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import indi.mat.work.project.annotation.Favorites;
-import indi.mat.work.project.service.system.ISystemFavoritesInfoService;
+import indi.mat.work.project.service.system.SystemFavoritesInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -27,7 +27,7 @@ public class FavoritesAspect {
     private static final Logger logger = LoggerFactory.getLogger(FavoritesAspect.class);
 
     @Autowired
-    ISystemFavoritesInfoService service;
+    SystemFavoritesInfoService service;
 
     @Pointcut("@annotation(indi.mat.work.project.annotation.Favorites)")
     private void fillFavoriteState() {

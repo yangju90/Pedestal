@@ -11,16 +11,16 @@ public class BaseModel implements Serializable {
     private boolean deleted;
 
     // 插入记录的用户名
-    private String inUser;
+    private String opUser;
 
     // 插入记录的时间
-    private Date inDate;
+    private Date opDate;
 
     // 最后一次修改的用户名
-    private String lastEditUser;
+    private String lastOpUser;
 
     // 最后一次修改的时间
-    private Date lastEditDate;
+    private Date lastOpDate;
 
     public Long getId() {
         return id;
@@ -38,35 +38,35 @@ public class BaseModel implements Serializable {
         this.deleted = deleted;
     }
 
-    public String getInUser() {
-        return inUser;
+    public String getOpUser() {
+        return opUser;
     }
 
-    public void setInUser(String inUser) {
-        this.inUser = inUser;
+    public void setOpUser(String opUser) {
+        this.opUser = opUser;
     }
 
-    public Date getInDate() {
-        return inDate;
+    public Date getOpDate() {
+        return opDate;
     }
 
-    public void setInDate(Date inDate) {
-        this.inDate = inDate;
+    public void setOpDate(Date opDate) {
+        this.opDate = opDate;
     }
 
-    public String getLastEditUser() {
-        return lastEditUser;
+    public String getLastOpUser() {
+        return lastOpUser;
     }
 
-    public void setLastEditUser(String lastEditUser) {
-        this.lastEditUser = lastEditUser;
+    public void setLastOpUser(String lastOpUser) {
+        this.lastOpUser = lastOpUser;
     }
 
-    public Date getLastEditDate() {
-        return lastEditDate;
+    public Date getLastOpDate() {
+        return lastOpDate;
     }
 
-    public void setLastEditDate(Date lastEditDate) {
-        this.lastEditDate = lastEditDate;
+    public void setLastOpDate(Date lastOpDate) {
+        this.lastOpDate = lastOpDate;
     }
 }
