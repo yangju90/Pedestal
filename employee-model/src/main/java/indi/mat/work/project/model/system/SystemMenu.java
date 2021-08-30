@@ -3,38 +3,51 @@ package indi.mat.work.project.model.system;
 import com.baomidou.mybatisplus.annotation.TableName;
 import indi.mat.work.project.model.BaseModel;
 
+import java.util.Date;
+
 @TableName("indi_system_menu")
 public class SystemMenu extends BaseModel {
 
     // 系统菜单编码
     private String menuCode;
-    private String menuName;
+    private String name;
 
     // 父级菜单编码
-    private String parentCode;
+    private String pCode;
 
     // 菜单状态 true 启用 false 未启用
     private boolean menuStatus;
 
     // 菜单控制的链接
-    private String herf;
-    private Integer sort;
+    private String href;
+    private String path;
     private String icon;
 
+
+    private String urlPrefix;
+    private Integer sort;
+
     // 菜单description
-    private String memo;
+    private String content;
 
-    public SystemMenu(){}
 
-    public SystemMenu(String menuCode, String menuName, String parentCode, boolean menuStatus, String herf, Integer sort, String icon, String memo){
+    public SystemMenu() {
+    }
+
+    public SystemMenu(String menuCode, String name, String pCode, boolean menuStatus, String href, String path, String icon, String urlPrefix, Integer sort, String content, boolean deleted, String opUser,Date opDate) {
         this.menuCode = menuCode;
-        this.menuName = menuName;
-        this.parentCode = parentCode;
+        this.name = name;
+        this.pCode = pCode;
         this.menuStatus = menuStatus;
-        this.herf = herf;
-        this.sort = sort;
+        this.href = href;
+        this.path = path;
         this.icon = icon;
-        this.memo = memo;
+        this.urlPrefix = urlPrefix;
+        this.sort = sort;
+        this.content = content;
+        this.setDeleted(deleted);
+        this.setOpUser(opUser);
+        this.setOpDate(opDate);
     }
 
     public String getMenuCode() {
@@ -45,20 +58,20 @@ public class SystemMenu extends BaseModel {
         this.menuCode = menuCode;
     }
 
-    public String getMenuName() {
-        return menuName;
+    public String getName() {
+        return name;
     }
 
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getParentCode() {
-        return parentCode;
+    public String getpCode() {
+        return pCode;
     }
 
-    public void setParentCode(String parentCode) {
-        this.parentCode = parentCode;
+    public void setpCode(String pCode) {
+        this.pCode = pCode;
     }
 
     public boolean isMenuStatus() {
@@ -69,20 +82,20 @@ public class SystemMenu extends BaseModel {
         this.menuStatus = menuStatus;
     }
 
-    public String getHerf() {
-        return herf;
+    public String getHref() {
+        return href;
     }
 
-    public void setHerf(String herf) {
-        this.herf = herf;
+    public void setHref(String href) {
+        this.href = href;
     }
 
-    public Integer getSort() {
-        return sort;
+    public String getPath() {
+        return path;
     }
 
-    public void setSort(Integer sort) {
-        this.sort = sort;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getIcon() {
@@ -93,11 +106,27 @@ public class SystemMenu extends BaseModel {
         this.icon = icon;
     }
 
-    public String getMemo() {
-        return memo;
+    public String getUrlPrefix() {
+        return urlPrefix;
     }
 
-    public void setMemo(String memo) {
-        this.memo = memo;
+    public void setUrlPrefix(String urlPrefix) {
+        this.urlPrefix = urlPrefix;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class UserControllerTest extends BaseTestController {
 
-    private String PERFIX ="/system";
+    private String PERFIX ="/system/menu";
 
     @Autowired
     private UserService userService;
@@ -36,7 +36,7 @@ public class UserControllerTest extends BaseTestController {
 
     @Test
     public void testGetUser() throws Exception {
-        mvc.perform(get(PERFIX + "/" + 1).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get(PERFIX + "/list").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 }

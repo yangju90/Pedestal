@@ -1,6 +1,9 @@
 package indi.mat.work.project.controller;
 
 import indi.mat.work.project.AppTest;
+import indi.mat.work.project.model.system.SystemMenu;
+import indi.mat.work.project.service.system.SystemMenuService;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Date;
 
 
 @SpringBootTest(classes = {AppTest.class})
@@ -24,6 +28,9 @@ public abstract class BaseTestController {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private SystemMenuService systemMenuService;
 
     @BeforeEach
     void setup() throws SQLException {
@@ -61,6 +68,22 @@ public abstract class BaseTestController {
                 "      INDEX `ix_menu_menu_code` (`menu_code`),\n" +
                 "      INDEX `ix_menu_menu_url_prefix` (`url_prefix`)\n" +
                 ") ENGINE=InnoDB DEFAULT charset=utf8mb4 COMMENT='菜单表';");
+
+        setupSystemMenu();
+    }
+
+    private void setupSystemMenu(){
+        systemMenuService.insert(new SystemMenu("01", "账户", "root", true, "/account", "./account", "small", "/account", 1, "账户以及目录", false, "admin", new Date()));
+        systemMenuService.insert(new SystemMenu("02", "公司", "root", true, "/company", "./company", "small", "/company", 2, "公司以及目录", false, "admin", new Date()));
+        systemMenuService.insert(new SystemMenu("03", "工作", "root", true, "/account", "./account", "small", "/account", 3, "账户以及目录", false, "admin", new Date()));
+        systemMenuService.insert(new SystemMenu("04", "支付", "root", true, "/account", "./account", "small", "/account", 4, "账户以及目录", false, "admin", new Date()));
+        systemMenuService.insert(new SystemMenu("05", "其他1", "root", true, "/account", "./account", "small", "/account", 5, "账户以及目录", false, "admin", new Date()));
+        systemMenuService.insert(new SystemMenu("06", "其他2", "root", true, "/account", "./account", "small", "/account", 6, "账户以及目录", false, "admin", new Date()));
+        systemMenuService.insert(new SystemMenu("07", "其他3", "root", true, "/account", "./account", "small", "/account", 7, "账户以及目录", false, "admin", new Date()));
+        systemMenuService.insert(new SystemMenu("0101", "账户用户", "01", true, "/accountUser", "./accountUser", "small", "/accountUser", 1, "账户用户", false, "admin", new Date()));
+        systemMenuService.insert(new SystemMenu("0102", "账户角色", "01", true, "/accountRole", "./accountRole", "small", "/accountRole", 2, "账户角色", false, "admin", new Date()));
+        systemMenuService.insert(new SystemMenu("0201", "查询公司", "02", true, "/companyQuery", "./companyQuery", "small", "/companyQuery", 1, "公司查询", false, "admin", new Date()));
+        systemMenuService.insert(new SystemMenu("0202", "创建公司", "02", true, "/companyCreate", "./companyCreate", "small", "/companyCreate", 2, "公司创建", false, "admin", new Date()));
     }
 
 }

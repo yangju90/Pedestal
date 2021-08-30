@@ -1,13 +1,24 @@
 package indi.mat.work.project.service.system.impl;
 
+import indi.mat.work.project.dao.system.SystemMenuMapper;
+import indi.mat.work.project.model.system.SystemMenu;
+import indi.mat.work.project.request.form.system.SystemMenuForm;
+import indi.mat.work.project.request.query.system.SystemMenuQuery;
+import indi.mat.work.project.service.base.BaseServiceImpl;
 import indi.mat.work.project.service.system.SystemMenuService;
 import indi.mat.work.project.model.sample.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class SystemMenuServiceImpl implements SystemMenuService {
+public class SystemMenuServiceImplImpl extends BaseServiceImpl<SystemMenu, SystemMenuForm, SystemMenuQuery> implements SystemMenuService {
+
+    @Autowired
+    SystemMenuMapper mapper;
 
     @CacheEvict(value = "user", key = "#id")
     public void delete(Integer id) {
@@ -20,15 +31,20 @@ public class SystemMenuServiceImpl implements SystemMenuService {
     }
 
     @Cacheable(value = "user", key = "#result.name", condition="#result != null && #result.id != null")
-    public User getById(Integer id) {
+    public SystemMenu getById(Long id) {
         System.out.println("system操作数据库，进行通过ID查询，ID: " + id);
-        return new User(id, "admin", "123", 18);
+        return mapper.selectById(id);
     }
 
     @Cacheable(value = "user", key = "#name")
     public User get(String name) {
         System.out.println("system操作数据库，进行通过name查询，Name: " + name);
         return new User(1, "admin", "123", 18);
+    }
+
+    @Override
+    public List<SystemMenu> selectAll() {
+        return mapper.selectList(null);
     }
 
 }

@@ -6,7 +6,7 @@ public class TestModelModule {
 
     public static SystemMenu getSystemMenu(){
         SystemMenu systemMenu = new SystemMenu();
-        systemMenu.setHerf("adadadadad");
+        systemMenu.setHref("adadadadad");
         return systemMenu;
     }
 }
