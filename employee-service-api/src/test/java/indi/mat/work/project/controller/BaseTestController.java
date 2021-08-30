@@ -3,7 +3,6 @@ package indi.mat.work.project.controller;
 import indi.mat.work.project.AppTest;
 import indi.mat.work.project.model.system.SystemMenu;
 import indi.mat.work.project.service.system.SystemMenuService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -72,6 +71,9 @@ public abstract class BaseTestController {
         setupSystemMenu();
     }
 
+    /**
+     * 系统菜单目录插入
+     */
     private void setupSystemMenu(){
         systemMenuService.insert(new SystemMenu("01", "账户", "root", true, "/account", "./account", "small", "/account", 1, "账户以及目录", false, "admin", new Date()));
         systemMenuService.insert(new SystemMenu("02", "公司", "root", true, "/company", "./company", "small", "/company", 2, "公司以及目录", false, "admin", new Date()));
