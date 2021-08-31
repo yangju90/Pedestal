@@ -1,14 +1,11 @@
 package indi.mat.work.project.controller.sample;
 
 
-import indi.mat.work.project.AppTest;
 import indi.mat.work.project.controller.BaseTestController;
-import indi.mat.work.project.dao.sample.UserMapper;
 import indi.mat.work.project.model.sample.User;
-import indi.mat.work.project.service.sample.UserService;
+import indi.mat.work.project.service.sample.IUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 
 
@@ -21,10 +18,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class UserControllerTest extends BaseTestController {
 
-    private String PERFIX ="/system/menu";
+    private String PERFIX ="/api/system/menu";
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @Test
     public void testSelect() {

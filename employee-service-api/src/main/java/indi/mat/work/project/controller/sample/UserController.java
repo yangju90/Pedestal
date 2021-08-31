@@ -1,7 +1,6 @@
 package indi.mat.work.project.controller.sample;
 
-import indi.mat.work.project.service.sample.UserService;
-import indi.mat.work.project.service.sample.impl.UserServiceImpl;
+import indi.mat.work.project.service.sample.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
 
     @RequestMapping("/get")

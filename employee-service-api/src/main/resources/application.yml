@@ -27,7 +27,7 @@ logging:
 indi:
   pf:
     jwt:
-      secret: 
+      secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 # yml 文件在IDEA中build不会复制到target文件中， 但是Maven compile 可以，考虑rebuild 项目以Maven project形式（Maven -> reimport）
 

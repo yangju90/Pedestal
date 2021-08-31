@@ -1,12 +1,13 @@
 package indi.mat.work.project.service.system.impl;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import indi.mat.work.project.dao.system.SystemMenuMapper;
+import indi.mat.work.project.model.sample.User;
 import indi.mat.work.project.model.system.SystemMenu;
 import indi.mat.work.project.request.form.system.SystemMenuForm;
 import indi.mat.work.project.request.query.system.SystemMenuQuery;
 import indi.mat.work.project.service.base.BaseServiceImpl;
-import indi.mat.work.project.service.system.SystemMenuService;
-import indi.mat.work.project.model.sample.User;
+import indi.mat.work.project.service.system.ISystemMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,10 +16,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SystemMenuServiceImplImpl extends BaseServiceImpl<SystemMenu, SystemMenuForm, SystemMenuQuery> implements SystemMenuService {
+public class SystemMenuServiceImpl extends BaseServiceImpl<SystemMenu, SystemMenuForm, SystemMenuQuery> implements ISystemMenuService {
 
     @Autowired
     SystemMenuMapper mapper;
+
+    @Override
+    protected BaseMapper<SystemMenu> mapper() {
+        return mapper;
+    }
+
+    @Override
+    protected SystemMenu model() {
+        return new SystemMenu();
+    }
+
 
     @CacheEvict(value = "user", key = "#id")
     public void delete(Integer id) {
@@ -46,5 +58,7 @@ public class SystemMenuServiceImplImpl extends BaseServiceImpl<SystemMenu, Syste
     public List<SystemMenu> selectAll() {
         return mapper.selectList(null);
     }
+
+
 
 }

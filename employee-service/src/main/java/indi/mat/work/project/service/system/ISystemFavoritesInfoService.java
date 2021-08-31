@@ -4,7 +4,7 @@ import indi.mat.work.project.model.system.SystemFavoritesInfo;
 
 import java.util.List;
 
-public interface SystemFavoritesInfoService {
+public interface ISystemFavoritesInfoService {
 
     List<SystemFavoritesInfo> selectAll();
 

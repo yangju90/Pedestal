@@ -1,17 +1,17 @@
 package indi.mat.work.project.controller.system;
 
 import indi.mat.work.project.model.system.SystemMenu;
-import indi.mat.work.project.service.system.SystemMenuService;
+import indi.mat.work.project.service.system.ISystemMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/system/menu")
+@RequestMapping("/api/system/menu")
 public class SystemMenuController {
     @Autowired
-    private SystemMenuService systemMenuService;
+    private ISystemMenuService systemMenuService;
 
     @GetMapping("{id}")
     public Object getById(@PathVariable Long id) {

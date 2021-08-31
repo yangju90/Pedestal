@@ -16,6 +16,11 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+indi:
+  pf:
+    jwt:
+      secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
 javax:
   cache:
     cacheName: user

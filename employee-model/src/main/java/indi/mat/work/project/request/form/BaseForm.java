@@ -4,7 +4,7 @@ import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.Size;
 
-public abstract class BaseForm<T> {
+public abstract class BaseForm {
 
     @NonNull
     @Size

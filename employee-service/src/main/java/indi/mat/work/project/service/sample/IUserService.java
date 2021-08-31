@@ -4,7 +4,7 @@ import indi.mat.work.project.model.sample.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface IUserService {
 
     public List<User> get();
 

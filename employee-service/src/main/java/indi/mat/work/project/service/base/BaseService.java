@@ -1,8 +1,15 @@
 package indi.mat.work.project.service.base;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import indi.mat.work.project.model.BaseModel;
 import indi.mat.work.project.request.form.BaseForm;
 import indi.mat.work.project.request.query.BaseQuery;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public interface BaseService<T extends BaseModel, F extends BaseForm, Q extends BaseQuery<T>> {
     /**

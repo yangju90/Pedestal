@@ -2,8 +2,10 @@ package indi.mat.work.project.controller;
 
 import indi.mat.work.project.AppTest;
 import indi.mat.work.project.model.system.SystemMenu;
-import indi.mat.work.project.service.system.SystemMenuService;
+import indi.mat.work.project.service.system.ISystemMenuService;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -15,9 +17,9 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Date;
 
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = {AppTest.class})
-@DirtiesContext
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public abstract class BaseTestController {
 
     public MockMvc mvc;
@@ -29,9 +31,9 @@ public abstract class BaseTestController {
     private DataSource dataSource;
 
     @Autowired
-    private SystemMenuService systemMenuService;
+    private ISystemMenuService systemMenuService;
 
-    @BeforeEach
+    @BeforeAll
     void setup() throws SQLException {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         dataSource.getConnection().createStatement().execute("CREATE TABLE if not exists `user` (\n" +

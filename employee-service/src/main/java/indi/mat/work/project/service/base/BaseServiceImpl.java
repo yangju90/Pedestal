@@ -1,14 +1,36 @@
 package indi.mat.work.project.service.base;
 
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import indi.mat.work.project.annotation.Unique;
+import indi.mat.work.project.exception.NewEmployeeException;
 import indi.mat.work.project.model.BaseModel;
 import indi.mat.work.project.request.form.BaseForm;
 import indi.mat.work.project.request.query.BaseQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
 
-public class BaseServiceImpl<T extends BaseModel, F extends BaseForm,Q extends BaseQuery<T>> implements BaseService<T, F, Q>{
+import java.beans.PropertyDescriptor;
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
-private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
+public abstract class BaseServiceImpl<T extends BaseModel, F extends BaseForm, Q extends BaseQuery<T>> implements BaseService<T, F, Q> {
+
+    private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
     protected abstract BaseMapper<T> mapper();
 
@@ -19,9 +41,10 @@ private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
     /**
      * 发布事件
+     *
      * @param event
      */
-    protected void  publishEvent(ApplicationEvent event){
+    protected void publishEvent(ApplicationEvent event) {
         context.publishEvent(event);
     }
 
@@ -56,12 +79,12 @@ private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
     @Override
     public int deleteById(Serializable id) {
 
-        if(id == null){
-            throw new NeweggStaffingException("id is must not null");
+        if (id == null) {
+            throw new NewEmployeeException("id is must not null");
         }
 
-        if(selectById(id) == null){
-            throw new NeweggStaffingException("id not exists");
+        if (selectById(id) == null) {
+            throw new NewEmployeeException("id not exists");
         }
 
         return mapper().deleteById(id);
@@ -95,8 +118,8 @@ private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
     @Override
     public int deleteBatchIds(Collection<? extends Serializable> idList) {
         for (Serializable id : idList) {
-            if(selectById(id) == null){
-                throw new NeweggStaffingException("id not exists");
+            if (selectById(id) == null) {
+                throw new NewEmployeeException("id not exists");
             }
         }
         return mapper().deleteBatchIds(idList);
@@ -109,12 +132,12 @@ private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
      */
     @Override
     public int updateById(T entity) {
-        if(entity.getId() == null){
-            throw new NeweggStaffingException("id is required");
+        if (entity.getId() == null) {
+            throw new NewEmployeeException("id is required");
         }
 
-        if(selectById(entity.getId()) == null){
-            throw new NeweggStaffingException("id not exists");
+        if (selectById(entity.getId()) == null) {
+            throw new NewEmployeeException("id not exists");
         }
         return mapper().updateById(entity);
     }
@@ -248,72 +271,75 @@ private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
     /**
      * 根据 自定义查询 条件，查询全部记录（并翻页）
      *
-     * @param query  自定义查询条件
+     * @param query 自定义查询条件
      */
     @Override
-    public IPage<T>  queryPage(BaseQuery<T> query) {
-        return  mapper().selectPage(query.page(), query.wrapper());
+    public IPage<T> queryPage(BaseQuery<T> query) {
+        return mapper().selectPage(query.page(), query.wrapper());
     }
 
     /**
      * 根据 自定义查询 条件，查询全部记录
      *
-     * @param query  自定义查询条件
+     * @param query 自定义查询条件
      */
     @Override
     public List<T> queryList(BaseQuery<T> query) {
-        return  mapper().selectList(query.wrapper());
+        return mapper().selectList(query.wrapper());
     }
 
     /**
      * 根据 自定义查询 条件，查询单个对象
      *
-     * @param query  自定义查询条件
+     * @param query 自定义查询条件
      */
     @Override
     public T queryOne(BaseQuery<T> query) {
-        return  mapper().selectOne(query.wrapper());
+        return mapper().selectOne(query.wrapper());
     }
 
     /**
      * check uniqueValue  if  exists
+     *
      * @param t
      * @return
      * @throws Exception
      */
     @Override
-    public synchronized void  checkUnique(T t,boolean isUpdate) {
-        try{
+    public synchronized void checkUnique(T t, boolean isUpdate) {
+        try {
             //index 0 is  primary key column name ;index 1 primary key value
             Object[] pkInfo = new Object[2];
-            if(isUpdate){
+            if (isUpdate) {
                 pkInfo = getPrimaryKeyInfo(t);
             }
-            Field[] fields =  t.getClass().getDeclaredFields();;
+            Field[] fields = t.getClass().getDeclaredFields();
+            ;
             for (Field field : fields) {
                 field.setAccessible(true);
                 boolean isUniqueField = field.isAnnotationPresent(Unique.class);
-                if(isUniqueField){
+                if (isUniqueField) {
                     String uniqueColumnName = getColumnName(field);
-                    Object uniqueValue = invokeGetMethod(t,field.getName());
-                    checkOneUnique(pkInfo,uniqueColumnName,uniqueValue);
+                    Object uniqueValue = invokeGetMethod(t, field.getName());
+                    checkOneUnique(pkInfo, uniqueColumnName, uniqueValue);
                 }
             }
-        }catch(NeweggStaffingException e){
+        } catch (NewEmployeeException e) {
             throw e;
-        }catch(Exception e){
-            logger.error (" checkUnique is error need check page or implementation you self ",e);
+        } catch (Exception e) {
+            logger.error(" checkUnique is error need check page or implementation you self ", e);
         }
 
     }
 
     /**
      * PrimaryKeyInfo
+     *
      * @param t
-     * @return  //index 0 is  primary key column name ; index 1 primary key value
+     * @return //index 0 is  primary key column name ; index 1 primary key value
      * @throws Exception
      */
-    private Object[] getPrimaryKeyInfo(T t) throws Exception{
+    private Object[] getPrimaryKeyInfo(T t) throws Exception {
         Object[] result = new Object[2];
         Field[] fields = t.getClass().getSuperclass().getDeclaredFields();
         for (Field field : fields) {
@@ -321,8 +347,8 @@ private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
             boolean isIdField = field.isAnnotationPresent(TableId.class);
             if (isIdField) {
                 result[0] = getColumnName(field);
-                result[1] = invokeGetMethod(t,field.getName());
-               break;
+                result[1] = invokeGetMethod(t, field.getName());
+                break;
             }
         }
         return result;
@@ -331,29 +357,30 @@ private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
     /**
      * check uniqueValue always exists
+     *
      * @param pkInfo
      * @param uniqueColumn
      * @param uniqueValue
      */
-    private void checkOneUnique(Object[] pkInfo,String uniqueColumn,Object uniqueValue){
-        String pkColumnName = pkInfo[0] == null?null:pkInfo[0].toString();
+    private void checkOneUnique(Object[] pkInfo, String uniqueColumn, Object uniqueValue) {
+        String pkColumnName = pkInfo[0] == null ? null : pkInfo[0].toString();
         Object pkValue = pkInfo[1];
         QueryWrapper<T> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(uniqueColumn,uniqueValue);
-        if(pkColumnName == null){
-            pkColumnName= "id";
+        queryWrapper.eq(uniqueColumn, uniqueValue);
+        if (pkColumnName == null) {
+            pkColumnName = "id";
         }
-        if(pkValue != null){
-            queryWrapper.ne(pkColumnName,pkValue);
+        if (pkValue != null) {
+            queryWrapper.ne(pkColumnName, pkValue);
         }
-        queryWrapper.eq("deleted",0);
+        queryWrapper.eq("deleted", 0);
         T t = selectOne(queryWrapper);
-        if(t != null){
-            throw new NeweggStaffingException(StringUtils.underlineToCamel(uniqueColumn)+":"+uniqueValue+" is already in use");
+        if (t != null) {
+            throw new NewEmployeeException(StringUtils.underlineToCamel(uniqueColumn) + ":" + uniqueValue + " is already in use");
         }
     }
 
-    private Object invokeGetMethod(T t,String fieldName) throws Exception{
+    private Object invokeGetMethod(T t, String fieldName) throws Exception {
         PropertyDescriptor pd = new PropertyDescriptor(fieldName, t.getClass());
         //获得读方法
         Method readMethod = pd.getReadMethod();
@@ -361,14 +388,15 @@ private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
         return value;
     }
 
-    private String getColumnName(Field field){
+    private String getColumnName(Field field) {
         TableField tableField = field.getAnnotation(TableField.class);
         String columnName = "";
         if (tableField != null) {
             columnName = tableField.value();
-        }else{
+        } else {
             columnName = StringUtils.camelToUnderline(field.getName());
         }
         return columnName;
     }
+
 }
