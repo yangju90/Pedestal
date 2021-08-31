@@ -16,6 +16,16 @@ public class SystemFavoritesInfoServiceImplImpl extends BaseServiceImpl<SystemFa
 
     @Autowired
     SystemFavoritesInfoMapper mapper;
+    
+    @Override
+    protected BaseMapper<SystemFavoritesInfo> mapper() {
+        return mapper;
+    }
+
+    @Override
+    protected SystemFavoritesInfo model() {
+        return new SystemFavoritesInfo();
+    }
 
     @Override
     public List<SystemFavoritesInfo> selectAll() {
