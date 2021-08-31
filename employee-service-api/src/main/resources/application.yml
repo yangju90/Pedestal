@@ -24,6 +24,10 @@ logging:
   pattern:
     console: '{"timestamp": "%date{yyyy-MM-dd HH:mm:ss.SSS, UTC}", "level": "%-5level", "thread": "%thread", "class_name": "%-40.40logger{39}", "message": "%m"}%n'
 
+indi:
+  pf:
+    jwt:
+      secret: 
 
 # yml 文件在IDEA中build不会复制到target文件中， 但是Maven compile 可以，考虑rebuild 项目以Maven project形式（Maven -> reimport）
 
