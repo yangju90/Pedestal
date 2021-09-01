@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
 <!--    https://blog.csdn.net/u010953880/article/details/113736340   -->
+<!--    https://blog.csdn.net/chenghuang2019/article/details/100908712 -->
+<!--    https://blog.csdn.net/cw_hello1/article/details/51969554 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers class="net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders">
