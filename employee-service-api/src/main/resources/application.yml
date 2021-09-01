@@ -21,8 +21,8 @@ javax:
 
 
 logging:
-  pattern:
-    console: '{"timestamp": "%date{yyyy-MM-dd HH:mm:ss.SSS, UTC}", "level": "%-5level", "thread": "%thread", "class_name": "%-40.40logger{39}", "message": "%m"}%n'
+  level:
+    root: info
 
 indi:
   pf:

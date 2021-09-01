@@ -14,12 +14,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>indi.mat.work.project</groupId>
-            <artifactId>employee-model</artifactId>
-            <version>${model.vesion}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>

@@ -16,6 +16,11 @@
     <url>http://www.example.com</url>
 
     <dependencies>
+        <dependency>
+            <groupId>indi.mat.work.project</groupId>
+            <artifactId>employee-common</artifactId>
+            <version>${common.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -41,6 +46,12 @@
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
         </dependency>
 
 
