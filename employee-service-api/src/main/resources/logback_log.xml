@@ -4,6 +4,7 @@
 <!--    https://blog.csdn.net/chenghuang2019/article/details/100908712 -->
 <!--    https://blog.csdn.net/cw_hello1/article/details/51969554 -->
 <!--   自定义Layouts http://logback.qos.ch/manual/layouts.html -->
+<!--    https://www.jianshu.com/p/a0eb78b8c775?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers class="net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders">
