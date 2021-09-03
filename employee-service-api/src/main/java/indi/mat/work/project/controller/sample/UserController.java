@@ -1,12 +1,21 @@
 package indi.mat.work.project.controller.sample;
 
+import indi.mat.work.project.model.system.SystemMenu;
 import indi.mat.work.project.service.sample.IUserService;
+import indi.mat.work.project.util.JsonUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 @RestController
 public class UserController {
+
+    private final static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private IUserService userService;
@@ -24,16 +33,18 @@ public class UserController {
         HashMap<Object, Object> mapL = new HashMap<>();
         mapL.put(systemMenu, systemMenu);
         logger.info("Map" + mapL);
-        logger.info("pMap" +map);
         ArrayList list = new ArrayList();
         list.add(systemMenu);
         list.add(systemMenu);
         logger.info("List {}", list);
         logger.info("list {} {}", list , list);
         logger.info("JSONObject {}" , JsonUtil.toJsonString(systemMenu));
-
-        if(true) {
-            throw new RuntimeException("adadadwdwdwa");
+        try {
+            if (true) {
+                throw new RuntimeException("adadadwdwdwa");
+            }
+        }catch (Exception e){
+            logger.error("{}", e);
         }
         return userService.get();
     }
