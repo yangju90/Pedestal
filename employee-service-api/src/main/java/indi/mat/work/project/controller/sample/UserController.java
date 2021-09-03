@@ -14,6 +14,27 @@ public class UserController {
 
     @RequestMapping("/get")
     public Object getById() {
+                logger.info("处理湿哒哒无多无");
+        logger.info("处理信息+ \" aaaa \" + bbbb + 'cccc'");
+        logger.info("处理信息+ \" aaaa \" + bbbb + \n 'cccc'");
+        SystemMenu systemMenu = new SystemMenu();
+        systemMenu.setId(1L);
+        systemMenu.setMenuCode("dadadada");
+        logger.info("Object" + systemMenu);
+        HashMap<Object, Object> mapL = new HashMap<>();
+        mapL.put(systemMenu, systemMenu);
+        logger.info("Map" + mapL);
+        logger.info("pMap" +map);
+        ArrayList list = new ArrayList();
+        list.add(systemMenu);
+        list.add(systemMenu);
+        logger.info("List {}", list);
+        logger.info("list {} {}", list , list);
+        logger.info("JSONObject {}" , JsonUtil.toJsonString(systemMenu));
+
+        if(true) {
+            throw new RuntimeException("adadadwdwdwa");
+        }
         return userService.get();
     }
 
