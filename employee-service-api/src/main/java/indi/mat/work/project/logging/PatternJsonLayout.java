@@ -25,12 +25,13 @@ import java.io.IOException;
 import java.util.TimeZone;
 
 public class PatternJsonLayout extends PatternLayout {
-    private byte[] lineSeparatorBytes = System.lineSeparator().getBytes();
-    Converter<ILoggingEvent> head;
+    private static final byte[] LINE_SEPARATOR_BYTES = System.lineSeparator().getBytes();
+    private static final Pattern REGEX =  Pattern.compile("[A-Za-z]+");
+    private static final List<String> CONVERTER_LIST = new ArrayList<>();
+    private static HashMap<String, Converter<ILoggingEvent>> CONVERTER_MAP;
 
     @Override
     public void start() {
-        // 读取配置文件
         String pattern = getPattern();
         if (pattern == null || pattern.length() == 0) {
             addError("Empty or null pattern.");
@@ -42,12 +43,13 @@ public class PatternJsonLayout extends PatternLayout {
                 p.setContext(getContext());
             }
             Node t = p.parse();
-            this.head = p.compile(t, getEffectiveConverterMap());
+            Converter<ILoggingEvent> head = p.compile(t, getEffectiveConverterMap());
             if (postCompileProcessor != null) {
                 postCompileProcessor.process(context, head);
             }
             ConverterUtil.setContextForConverters(getContext(), head);
-            ConverterUtil.startConverters(this.head);
+            ConverterUtil.startConverters(head);
+            CONVERTER_MAP = converterHashMap(head);
             super.start();
         } catch (ScanException sce) {
             StatusManager sm = getContext().getStatusManager();
@@ -66,35 +68,58 @@ public class PatternJsonLayout extends PatternLayout {
         try {
             JsonGenerator generator = new JsonFactory().createGenerator(outputStream);
             generator.writeStartObject();
-//            this.jsonProviders.writeTo(generator, event);
-//            generator.writeObjectField("timestamp", cachingDateFormatter.format(event.getTimeStamp()));
-//            generator.writeObjectField("level", null);
-//            generator.writeObjectField("thread", null);
-//            generator.writeObjectField("class", null);
-//
-//            generator.writeObjectField("message", event.getFormattedMessage());
-//            if(null != event.getThrowableProxy()) {
-//                StringBuilder strBuilder = new StringBuilder(128);
-//                tpc.write(strBuilder, event);
-//                generator.writeObjectField("exception", strBuilder.toString());
-//            };
+            CONVERTER_LIST.forEach(name -> write(generator, name, event));
             generator.writeEndObject();
             generator.flush();
             generator.close();
-
-            outputStream.write(this.lineSeparatorBytes);
+            outputStream.write(LINE_SEPARATOR_BYTES);
             return outputStream.toString();
-        } catch (IOException e) {
+        } catch (Throwable e) {
             this.addWarn("Error encountered while encoding log event. Event: " + event, e);
         } finally {
             try {
                 outputStream.close();
-            } catch (IOException var15) {
-                throw new RuntimeException(var15);
+            } catch (IOException var) {
+                throw new RuntimeException(var);
             }
         }
 
         return CoreConstants.EMPTY_STRING;
+    }
+
+
+    private void write(JsonGenerator generator, String name, ILoggingEvent event) {
+        StringBuilder strBuilder = new StringBuilder(128);
+        Converter c = CONVERTER_MAP.get(name);
+        if(c != null) {
+            c.write(strBuilder, event);
+        }
+        try {
+            generator.writeObjectField(name, strBuilder.toString());
+        } catch (IOException e) {
+            throw new RuntimeException("Error encountered while encoding log event." + e);
+        }
+    }
+
+
+    private HashMap<String, Converter<ILoggingEvent>> converterHashMap(Converter<ILoggingEvent> head){
+        HashMap<String, Converter<ILoggingEvent>> map = new HashMap<>();
+        Converter<ILoggingEvent> c = head;
+        while(c!= null && c.getNext() != null){
+            if(! (c instanceof LiteralConverter)){
+                throw new RuntimeException("Error encountered while convert pattern.");
+            }
+            String name = c.convert(null);
+            c = c.getNext();
+            Matcher matcher = REGEX.matcher(name);
+            if(matcher.find()){
+                name = matcher.group(0);
+                CONVERTER_LIST.add(name);
+                map.put(name, c);
+            }
+            c = c.getNext();
+        }
+        return map;
     }
 
 }
