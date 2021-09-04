@@ -47,7 +47,25 @@ public class LoggingJsonConfiguration extends ContextAwareBase implements Config
     }
 
     private LinkedHashMap<String, LinkedHashMap> parseYaml(String yamlName){
-        return new Yaml().load(LoggingJsonConfiguration.class.getResourceAsStream("/" + yamlName));
+        URL url = LoggingJsonConfiguration.class.getResource("/" + yamlName);
+        if(url != null){
+            return new Yaml().load(LoggingJsonConfiguration.class.getResourceAsStream("/" + yamlName));
+        }
+        String path = LoggingJsonConfiguration.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+
+        System.out.println("rootPath: " + path);
+
+        if(path.contains("jar")){
+            path = path.substring(0, path.lastIndexOf("."));
+            path = path.substring(0, path.lastIndexOf("/"));
+        }
+
+        System.out.println("path: " + path);
+        File file = new File(path + yamlName);
+        if(file.exists()){
+            return new Yaml().load(LoggingJsonConfiguration.class.getResourceAsStream(file.getPath()));
+        }
+        return new LinkedHashMap<>();
     }
 
 
