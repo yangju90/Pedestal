@@ -28,12 +28,12 @@ public class JsonUtil {
 //        // 强制JSON 空字符串("")转换为null对象值:
 //        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 //
-//        // 在JSON中允许C/C++ 样式的注释(非标准，默认禁用)
-//        mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
-//        // 允许没有引号的字段名（非标准）
-//        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-//        // 允许单引号（非标准）
-//        mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+        // 在JSON中允许C/C++ 样式的注释(非标准，默认禁用)
+        mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+        // 允许没有引号的字段名（非标准）
+        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+        // 允许单引号（非标准）
+        mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 //        // 强制转义非ASCII字符
 //        mapper.configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
 //        // 将内容包裹为一个JSON属性，属性名由@JsonRootName注解指定
@@ -55,8 +55,14 @@ public class JsonUtil {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         //取消时间的转化格式,默认是时间戳,可以取消,同时需要设置要表现的时间格式  
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+//         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+//         mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        MAPPER.setTimeZone(TimeZone.getDefault());
+        MAPPER.setConfig(MAPPER.getDeserializationConfig()
+                .with(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS)
+                .with(JsonReadFeature.ALLOW_TRAILING_COMMA)
+                .with(JsonReadFeature.ALLOW_MISSING_VALUES)
+                .with(JsonWriteFeature.ESCAPE_NON_ASCII));
 
 //        // 允许出现特殊字符和转义符
 //        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
@@ -84,6 +90,28 @@ public class JsonUtil {
 
         return ans;
     }
+public static String toJsonString(Object o, boolean pretty) throws JsonProcessingException {
+        if(pretty) {
+            return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+        } else {
+            return MAPPER.writeValueAsString(o);
+        }
+    }
 
+    public static <T> T jsonToObject(String json, Class<T> clazz) throws JsonProcessingException {
+        return MAPPER.readValue(json, clazz);
+    }
+
+    public static <T> T jsonToObject(String json, TypeReference<T> valueTypeRef) throws JsonProcessingException {
+        return MAPPER.readValue(json, valueTypeRef);
+    }
+
+    public static <K, V> Map<K, V> jsonToMap(String json, Class<K> keyClazz, Class<V> valueClazz) throws JsonProcessingException {
+        return MAPPER.readValue(json, MAPPER.getTypeFactory().constructMapType(Map.class, keyClazz, valueClazz));
+    }
+
+    public static <T> List<T> jsonToList(String json, Class<T> clazz) throws JsonProcessingException {
+        return MAPPER.readValue(json, MAPPER.getTypeFactory().constructCollectionLikeType(List.class, clazz));
+    }
 
 }
