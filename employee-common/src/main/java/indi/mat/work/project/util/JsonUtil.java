@@ -1,14 +1,10 @@
 package indi.mat.work.project.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
-import indi.mat.work.project.exception.NewEmployeeException;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
+import indi.mat.work.project.exception.EmployeeException;
 
 public class JsonUtil {
 
@@ -85,7 +81,7 @@ public class JsonUtil {
         try {
             ans = mapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            throw new NewEmployeeException("JsonUtil toJsonString Error");
+            throw new EmployeeException("JsonUtil toJsonString Error");
         }
 
         return ans;

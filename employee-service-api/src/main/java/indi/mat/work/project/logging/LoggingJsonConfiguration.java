@@ -8,10 +8,15 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.encoder.LayoutWrappingEncoder;
 import ch.qos.logback.core.spi.ContextAwareBase;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.File;
+import java.net.URL;
+import java.util.LinkedHashMap;
 
 /**
  * <p>
- *  Json日志配置
+ * Json日志配置
  * </p>
  *
  * @author Mat
@@ -22,7 +27,7 @@ public class LoggingJsonConfiguration extends ContextAwareBase implements Config
     @Override
     public void configure(LoggerContext loggerContext) {
         LinkedHashMap<String, LinkedHashMap> map = parseYaml("application.yml");
-        if(logSwitch(map)) {
+        if (logSwitch(map)) {
             addInfo("Setting up LoggingJson configuration.");
 
             ConsoleAppender<ILoggingEvent> consoleAppender = new ConsoleAppender<ILoggingEvent>();
@@ -46,56 +51,56 @@ public class LoggingJsonConfiguration extends ContextAwareBase implements Config
         }
     }
 
-    private LinkedHashMap<String, LinkedHashMap> parseYaml(String yamlName){
+    private LinkedHashMap<String, LinkedHashMap> parseYaml(String yamlName) {
         URL url = LoggingJsonConfiguration.class.getResource("/" + yamlName);
-        if(url != null){
+        if (url != null) {
             return new Yaml().load(LoggingJsonConfiguration.class.getResourceAsStream("/" + yamlName));
         }
         String path = LoggingJsonConfiguration.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
         System.out.println("rootPath: " + path);
 
-        if(path.contains("jar")){
+        if (path.contains("jar")) {
             path = path.substring(0, path.lastIndexOf("."));
             path = path.substring(0, path.lastIndexOf("/"));
         }
 
         System.out.println("path: " + path);
         File file = new File(path + yamlName);
-        if(file.exists()){
+        if (file.exists()) {
             return new Yaml().load(LoggingJsonConfiguration.class.getResourceAsStream(file.getPath()));
         }
         return new LinkedHashMap<>();
     }
 
 
-    private boolean logSwitch(LinkedHashMap<String, LinkedHashMap> map){
+    private boolean logSwitch(LinkedHashMap<String, LinkedHashMap> map) {
         LinkedHashMap<String, Object> logging = map.get("logging");
-        if(logging != null){
+        if (logging != null) {
             String s = (String) logging.get("switch");
-            if("spi".equalsIgnoreCase(s)) {
+            if ("spi".equalsIgnoreCase(s)) {
                 return true;
             }
         }
         return false;
     }
 
-    private String getPatternOrDefault(LinkedHashMap<String, LinkedHashMap> map){
+    private String getPatternOrDefault(LinkedHashMap<String, LinkedHashMap> map) {
         LinkedHashMap<String, Object> logging = map.get("logging");
-        if(logging != null){
+        if (logging != null) {
             LinkedHashMap<String, String> pattern = (LinkedHashMap<String, String>) logging.get("pattern");
-            if(pattern != null){
+            if (pattern != null) {
                 return pattern.get("console");
             }
         }
         return "{\"timestamp\": \"%d{yyyy-MM-dd HH:mm:ss.SSS, UTC}\", \"level\": \"%-5p\", \"thread\": \"%t\", \"class\": \"%-40.40logger{39}\", \"message\": \"%m\", \"exception\": \"%ex\"}";
     }
 
-    private Level getRootLevelOrDefault(LinkedHashMap<String, LinkedHashMap> map){
+    private Level getRootLevelOrDefault(LinkedHashMap<String, LinkedHashMap> map) {
         LinkedHashMap<String, Object> logging = map.get("logging");
-        if(logging != null){
+        if (logging != null) {
             LinkedHashMap<String, String> level = (LinkedHashMap<String, String>) logging.get("level");
-            if(level != null){
+            if (level != null) {
                 return Level.toLevel(level.get("root"), Level.ERROR);
             }
         }

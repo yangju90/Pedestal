@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import indi.mat.work.project.annotation.Unique;
-import indi.mat.work.project.exception.NewEmployeeException;
+import indi.mat.work.project.exception.EmployeeException;
 import indi.mat.work.project.model.BaseModel;
 import indi.mat.work.project.request.form.BaseForm;
 import indi.mat.work.project.request.query.BaseQuery;
@@ -80,11 +80,11 @@ public abstract class BaseServiceImpl<T extends BaseModel, F extends BaseForm, Q
     public int deleteById(Serializable id) {
 
         if (id == null) {
-            throw new NewEmployeeException("id is must not null");
+            throw new EmployeeException("id is must not null");
         }
 
         if (selectById(id) == null) {
-            throw new NewEmployeeException("id not exists");
+            throw new EmployeeException("id not exists");
         }
 
         return mapper().deleteById(id);
@@ -119,7 +119,7 @@ public abstract class BaseServiceImpl<T extends BaseModel, F extends BaseForm, Q
     public int deleteBatchIds(Collection<? extends Serializable> idList) {
         for (Serializable id : idList) {
             if (selectById(id) == null) {
-                throw new NewEmployeeException("id not exists");
+                throw new EmployeeException("id not exists");
             }
         }
         return mapper().deleteBatchIds(idList);
@@ -133,11 +133,11 @@ public abstract class BaseServiceImpl<T extends BaseModel, F extends BaseForm, Q
     @Override
     public int updateById(T entity) {
         if (entity.getId() == null) {
-            throw new NewEmployeeException("id is required");
+            throw new EmployeeException("id is required");
         }
 
         if (selectById(entity.getId()) == null) {
-            throw new NewEmployeeException("id not exists");
+            throw new EmployeeException("id not exists");
         }
         return mapper().updateById(entity);
     }
@@ -324,7 +324,7 @@ public abstract class BaseServiceImpl<T extends BaseModel, F extends BaseForm, Q
                     checkOneUnique(pkInfo, uniqueColumnName, uniqueValue);
                 }
             }
-        } catch (NewEmployeeException e) {
+        } catch (EmployeeException e) {
             throw e;
         } catch (Exception e) {
             logger.error(" checkUnique is error need check page or implementation you self ", e);
@@ -376,7 +376,7 @@ public abstract class BaseServiceImpl<T extends BaseModel, F extends BaseForm, Q
         queryWrapper.eq("deleted", 0);
         T t = selectOne(queryWrapper);
         if (t != null) {
-            throw new NewEmployeeException(StringUtils.underlineToCamel(uniqueColumn) + ":" + uniqueValue + " is already in use");
+            throw new EmployeeException(StringUtils.underlineToCamel(uniqueColumn) + ":" + uniqueValue + " is already in use");
         }
     }
 
