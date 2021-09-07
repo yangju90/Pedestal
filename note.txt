@@ -1,0 +1,4 @@
+OAuth2理解
+
+https://www.cnblogs.com/xiaofengwang/p/11376881.html
+https://lotabout.me/2020/OAuth-2-workflow/
