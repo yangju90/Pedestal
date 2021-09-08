@@ -23,6 +23,7 @@ javax:
 logging:
   level:
     root: info
+  switch: spring
 
 indi:
   pf:

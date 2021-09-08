@@ -3,8 +3,13 @@ package indi.mat.work.project.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import indi.mat.work.project.exception.EmployeeException;
+
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 public class JsonUtil {
 
@@ -53,12 +58,12 @@ public class JsonUtil {
         //取消时间的转化格式,默认是时间戳,可以取消,同时需要设置要表现的时间格式  
 //         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 //         mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-        MAPPER.setTimeZone(TimeZone.getDefault());
-        MAPPER.setConfig(MAPPER.getDeserializationConfig()
-                .with(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS)
-                .with(JsonReadFeature.ALLOW_TRAILING_COMMA)
-                .with(JsonReadFeature.ALLOW_MISSING_VALUES)
-                .with(JsonWriteFeature.ESCAPE_NON_ASCII));
+        mapper.setTimeZone(TimeZone.getDefault());
+//        MAPPER.setConfig(MAPPER.getDeserializationConfig()
+//                .with(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS)
+//                .with(JsonReadFeature.ALLOW_TRAILING_COMMA)
+//                .with(JsonReadFeature.ALLOW_MISSING_VALUES)
+//                .with(JsonWriteFeature.ESCAPE_NON_ASCII));
 
 //        // 允许出现特殊字符和转义符
 //        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
@@ -76,38 +81,39 @@ public class JsonUtil {
     }
 
 
+    public static String toJsonString(Object o, boolean pretty) throws JsonProcessingException {
+        if (pretty) {
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+        } else {
+            return mapper.writeValueAsString(o);
+        }
+    }
+
+    public static <T> T jsonToObject(String json, Class<T> clazz) throws JsonProcessingException {
+        return mapper.readValue(json, clazz);
+    }
+
+    public static <T> T jsonToObject(String json, TypeReference<T> valueTypeRef) throws JsonProcessingException {
+        return mapper.readValue(json, valueTypeRef);
+    }
+
+    public static <K, V> Map<K, V> jsonToMap(String json, Class<K> keyClazz, Class<V> valueClazz) throws JsonProcessingException {
+        return mapper.readValue(json, mapper.getTypeFactory().constructMapType(Map.class, keyClazz, valueClazz));
+    }
+
+    public static <T> List<T> jsonToList(String json, Class<T> clazz) throws JsonProcessingException {
+        return mapper.readValue(json, mapper.getTypeFactory().constructCollectionLikeType(List.class, clazz));
+    }
+
     public static String toJsonString(Object object) {
         String ans = "";
         try {
-            ans = mapper.writeValueAsString(object);
+            ans = toJsonString(object, false);
         } catch (JsonProcessingException e) {
             throw new EmployeeException("JsonUtil toJsonString Error");
         }
 
         return ans;
-    }
-public static String toJsonString(Object o, boolean pretty) throws JsonProcessingException {
-        if(pretty) {
-            return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(o);
-        } else {
-            return MAPPER.writeValueAsString(o);
-        }
-    }
-
-    public static <T> T jsonToObject(String json, Class<T> clazz) throws JsonProcessingException {
-        return MAPPER.readValue(json, clazz);
-    }
-
-    public static <T> T jsonToObject(String json, TypeReference<T> valueTypeRef) throws JsonProcessingException {
-        return MAPPER.readValue(json, valueTypeRef);
-    }
-
-    public static <K, V> Map<K, V> jsonToMap(String json, Class<K> keyClazz, Class<V> valueClazz) throws JsonProcessingException {
-        return MAPPER.readValue(json, MAPPER.getTypeFactory().constructMapType(Map.class, keyClazz, valueClazz));
-    }
-
-    public static <T> List<T> jsonToList(String json, Class<T> clazz) throws JsonProcessingException {
-        return MAPPER.readValue(json, MAPPER.getTypeFactory().constructCollectionLikeType(List.class, clazz));
     }
 
 }

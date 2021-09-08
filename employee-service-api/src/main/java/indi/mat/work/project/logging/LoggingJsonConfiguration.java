@@ -11,6 +11,9 @@ import ch.qos.logback.core.spi.ContextAwareBase;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedHashMap;
 
@@ -27,6 +30,7 @@ public class LoggingJsonConfiguration extends ContextAwareBase implements Config
     @Override
     public void configure(LoggerContext loggerContext) {
         LinkedHashMap<String, LinkedHashMap> map = parseYaml("application.yml");
+        System.out.println("switch: " +  logSwitch(map));
         if (logSwitch(map)) {
             addInfo("Setting up LoggingJson configuration.");
 
@@ -57,20 +61,29 @@ public class LoggingJsonConfiguration extends ContextAwareBase implements Config
             return new Yaml().load(LoggingJsonConfiguration.class.getResourceAsStream("/" + yamlName));
         }
         String path = LoggingJsonConfiguration.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-
-        System.out.println("rootPath: " + path);
+        LinkedHashMap<String, LinkedHashMap> ans = new LinkedHashMap<>();
 
         if (path.contains("jar")) {
             path = path.substring(0, path.lastIndexOf("."));
             path = path.substring(0, path.lastIndexOf("/"));
         }
 
-        System.out.println("path: " + path);
-        File file = new File(path + yamlName);
-        if (file.exists()) {
-            return new Yaml().load(LoggingJsonConfiguration.class.getResourceAsStream(file.getPath()));
+        File file = new File(path + File.pathSeparator + yamlName);
+        if (!file.exists()) {
+            // docker 读取
+            file = new File( File.pathSeparator + yamlName);
         }
-        return new LinkedHashMap<>();
+        if(file.exists()){
+            try(FileReader reader = new FileReader(file)) {
+                ans = new Yaml().load(reader);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return ans;
     }
 
 

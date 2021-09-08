@@ -1,3 +1,7 @@
+package indi.mat.work.project.controller;
+
+import indi.mat.work.project.response.Response;
+
 public abstract class BaseController {
     public Response<Void> SUCCESS() {
         return Response.SUCCESS();
