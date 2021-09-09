@@ -18,3 +18,18 @@ insert into student (name,class,subject, score) values ('mat','01', '语文', 50
 insert into student (name,class,subject, score) values ('vf','01', '数学', 12);
 insert into student (name,class,subject, score) values ('mat','01', '英语', 34);
 insert into student (name,class,subject, score) values ('zz','01', '语文', 90);
+
+
+public class EmailValidator implements ConstraintValidator<Email,String> {
+
+    private Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$");
+
+    @Override
+    public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
+        if(!StringUtils.hasLength(value)){
+            return true;
+        }
+        Matcher matcher= pattern.matcher(value);
+        return matcher.matches();
+    }
+}
