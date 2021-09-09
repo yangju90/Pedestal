@@ -1,15 +1,30 @@
 package indi.mat.work.project.config;
 
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import indi.mat.work.project.model.BaseModel;
+import indi.mat.work.project.util.WebUtil;
+import org.apache.ibatis.binding.MapperMethod;
+import org.apache.ibatis.executor.Executor;
+import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.SqlCommandType;
+import org.apache.ibatis.plugin.*;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Collection;
+import java.util.Date;
 
 @Configuration
 @MapperScan("indi.mat.work.project.dao.*")
 public class MyBatisConfig {
-    
+
     // https://www.cnblogs.com/dogdogwang/p/13019060.html
 
-@Bean
+    @Bean
     public ModelInterceptor modelInterceptor() {
         return new ModelInterceptor();
     }
@@ -35,7 +50,8 @@ public class MyBatisConfig {
             SqlCommandType sqlCommandType = mappedStatement.getSqlCommandType();
             if (SqlCommandType.INSERT.equals(sqlCommandType) || SqlCommandType.UPDATE.equals(sqlCommandType)) {
                 Object parameter = invocation.getArgs()[1];
-                String user = WebUtil.currentUserEmail(DEFAULT_USER_EMAIL);
+//                String user = WebUtil.currentUserEmail(DEFAULT_USER_EMAIL);
+                String user = "admin";
                 if (parameter instanceof BaseModel) {
                     updateModel(sqlCommandType, (BaseModel) parameter, user);
                 } else if (parameter instanceof MapperMethod.ParamMap) {
@@ -65,13 +81,13 @@ public class MyBatisConfig {
         private void updateModel(SqlCommandType sqlCommandType, BaseModel model, String user) {
             Date now = new Date();
             if (SqlCommandType.INSERT.equals(sqlCommandType)) {
-                model.setInUser(user);
-                model.setInDate(now);
-                model.setLastEditUser(user);
-                model.setLastEditDate(now);
+                model.setOpUser(user);
+                model.setOpDate(now);
+                model.setLastOpUser(user);
+                model.setLastOpDate(now);
             } else if (SqlCommandType.UPDATE.equals(sqlCommandType)) {
-                model.setLastEditUser(user);
-                model.setLastEditDate(now);
+                model.setLastOpUser(user);
+                model.setLastOpDate(now);
             }
         }
 

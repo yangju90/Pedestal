@@ -1,13 +1,14 @@
-package com.mat.work;
+package indi.mat.work.project.helper;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import indi.mat.work.project.NsFreemarkerTemplateEngine;
 
 import java.io.File;
 
 
-public class CodeGenerator {
+public class CoderGenerate {
 
     static String author = "Mat";
 
@@ -26,7 +27,7 @@ public class CodeGenerator {
         String projectPath = System.getProperty("user.dir")+"\\code-generator\\code";
         gc.setOutputDir(projectPath + "/src/main/java");
         deleteFile(new File(projectPath));
-        String codePath = projectPath+"\\com\\mat\\work";
+        String codePath = projectPath+"\\indi\\mat\\work\\project";
 
         gc.setAuthor(author);
         gc.setOpen(false);
@@ -34,7 +35,7 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://local:3306/test?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://localhost:3306/test?useUnicode=true&useSSL=false&characterEncoding=utf8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("123456");
@@ -42,7 +43,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(moduleName);
-        pc.setParent("com.mat.work");
+        pc.setParent("indi.mat.work.project");
         mpg.setPackageInfo(pc);
         // 配置模版
         TemplateConfig templateConfig = new TemplateConfig();
@@ -54,18 +55,18 @@ public class CodeGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
 
-        strategy.setSuperEntityClass("com.mat.work.model.BaseModel");
+        strategy.setSuperEntityClass("indi.mat.work.project.model.BaseModel");
         strategy.setEntityLombokModel(false);
         strategy.setRestControllerStyle(true);
         // 公共父类
-        strategy.setSuperControllerClass("com.mat.work.controller.BaseController");
-        strategy.setSuperServiceClass("com.mat.work.service.base.IBaseService");
-        strategy.setSuperServiceImplClass("com.mat.work.service.base.BaseService");
+        strategy.setSuperControllerClass("indi.mat.work.project.controller.BaseController");
+        strategy.setSuperServiceClass("indi.mat.work.project.service.base.IBaseService");
+        strategy.setSuperServiceImplClass("indi.mat.work.project.service.base.BaseService");
         // 写于父类中的公共字段
-        strategy.setSuperEntityColumns("id","deleted","in_user","in_date","last_edit_user","last_edit_date");
+        strategy.setSuperEntityColumns("id","deleted","op_user","op_date","last_op_user","last_op_date");
         strategy.setInclude(tableName);
         strategy.setControllerMappingHyphenStyle(false);
-        strategy.setTablePrefix("ns_");
+        strategy.setTablePrefix("indi_");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new NsFreemarkerTemplateEngine(codePath));
         mpg.execute();

@@ -10,7 +10,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <model.vesion>0.0.1-SNAPSHOT</model.vesion>
         <common.version>0.0.1-SNAPSHOT</common.version>
-             <pagehelper.version>5.2.1</pagehelper.version>
+        <pagehelper.version>5.2.1</pagehelper.version>
         <service.version>0.0.1-SNAPSHOT</service.version>
         <persist.version>0.0.1-SNAPSHOT</persist.version>
         <mybatis.plus>3.4.3.1</mybatis.plus>
@@ -28,6 +28,7 @@
         <module>employee-service-api</module>
         <module>employee-persist</module>
         <module>employee-service</module>
+        <module>helper</module>
     </modules>
 
     <name>employee</name>
