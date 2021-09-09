@@ -6,11 +6,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 import java.io.File;
 
-/**
- * @author vic
- * @date 8/14/2021 1:56 PM
- * @description TODO
- */
+
 public class CodeGenerator {
 
     static String author = "Marvin.J.Yang";
@@ -77,7 +73,7 @@ public class CodeGenerator {
 
 
     public static boolean deleteFile( File dirFile) {
-        // ??dir????????,???
+        // 如果dir对应的文件不存在，则退出
         if (!dirFile.exists()) {
             return false;
         }
