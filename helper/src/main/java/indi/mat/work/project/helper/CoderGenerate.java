@@ -9,11 +9,11 @@ import java.io.File;
 
 public class CodeGenerator {
 
-    static String author = "Marvin.J.Yang";
+    static String author = "Mat";
 
     static String moduleName = "system";
 
-    static String  [] tableName = {"ns_system_favorites_info"};
+    static String  [] tableName = {"system_favorites_info"};
 
 
 
