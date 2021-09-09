@@ -12,6 +12,8 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+   
+  type-handlers-package: indi.mat.work.project.handler
 
 javax:
   cache:
