@@ -39,7 +39,7 @@ public class SSLUtils {
     }
 
     /**
-     * use: HttpClient 使用方法
+     * use: HttpClient 使用方法 httpClient.execute(get);
      */
     public static HttpClient getHttpClientIgnoreSSL() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         SSLContext sslContext = SSLContextBuilder.create().loadTrustMaterial((x, y) -> true).build();
