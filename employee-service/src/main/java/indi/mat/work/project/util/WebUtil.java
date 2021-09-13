@@ -1,5 +1,11 @@
 package indi.mat.work.project.util;
 
+import indi.mat.work.project.model.user.LoginUser;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+
+
+
 public class WebUtil {
       /**
      * 当前登录的用户
@@ -7,7 +13,7 @@ public class WebUtil {
     public static LoginUser currentUser() {
         try {
             return (LoginUser) RequestContextHolder.currentRequestAttributes()
-                    .getAttribute(LOGIN_USER_IN_REQUEST, RequestAttributes.SCOPE_REQUEST);
+                    .getAttribute(Constant.LOGIN_USER_IN_REQUEST, RequestAttributes.SCOPE_REQUEST);
         } catch (IllegalStateException e) {
             return null;
         }

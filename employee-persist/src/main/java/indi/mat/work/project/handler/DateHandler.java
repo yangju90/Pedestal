@@ -1,4 +1,15 @@
-public class DateConverter extends BaseTypeHandler<Date> {
+package indi.mat.work.project.handler;
+
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+
+public class DateHandler extends BaseTypeHandler<Date> {
 
     //将 java 类型，转换为 jdbc 类型
     @Override
