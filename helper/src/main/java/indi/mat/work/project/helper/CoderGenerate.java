@@ -3,7 +3,6 @@ package indi.mat.work.project.helper;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import indi.mat.work.project.NsFreemarkerTemplateEngine;
 
 import java.io.File;
 

@@ -1,4 +1,4 @@
-package indi.mat.work.project;
+package indi.mat.work.project.helper;
 
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
