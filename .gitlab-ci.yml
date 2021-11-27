@@ -1,0 +1,30 @@
+image: docker:stable
+
+stages:
+  - build
+  - release
+
+build:
+  image: docker:stable
+  stage: build
+  tags:
+    - logistics_runner
+  only:
+    - /^\d+\.\d+\.\d+$/
+  except:
+    - branches
+  script:
+    - bash .gitlab-ci/build.sh
+
+release:
+  stage: release
+  dependencies: []
+  tags:
+    - logistics_runner
+  only:
+    - /^\d+\.\d+\.\d+$/
+  except:
+    - branches
+  script:
+    - bash .gitlab-ci/release.sh
+  when: manual
