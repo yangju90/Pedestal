@@ -29,6 +29,8 @@
         <module>employee-persist</module>
         <module>employee-service</module>
         <module>helper</module>
+        <module>indi-db-springboot-starter</module>
+        <module>indi-db-springboot-starter-test</module>
     </modules>
 
     <name>employee</name>
