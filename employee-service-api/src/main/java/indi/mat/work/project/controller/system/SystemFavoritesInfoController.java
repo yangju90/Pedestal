@@ -29,6 +29,8 @@ public class SystemFavoritesInfoController {
         return service.selectAll();
     }
 
+
+    // 简单路由转发，复杂的还得需要Spring Cloud ApiGateway
     @RequestMapping(value = "proxy", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
     public ResponseEntity proxy(HttpServletRequest request, HttpServletResponse response){
         return serviceDelegate.redirect(request, response, "https://www.woah.group/", "/api/system/favorites/info/proxy");
