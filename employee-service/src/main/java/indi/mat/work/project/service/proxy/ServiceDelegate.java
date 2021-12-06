@@ -1,6 +1,22 @@
+package indi.mat.work.project.service.proxy;
+
+import org.springframework.http.*;
+import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.List;
 
 @Service
-public class RoutingDelegate {
+public class ServiceDelegate {
 
 
     public ResponseEntity<String> redirect(HttpServletRequest request, HttpServletResponse response, String routeUrl, String prefix) {
@@ -8,7 +24,8 @@ public class RoutingDelegate {
             // build up the redirect URL
             String redirectUrl = createRedirectUrl(request,routeUrl, prefix);
             RequestEntity requestEntity = createRequestEntity(request, ""+redirectUrl);
-            return route(requestEntity);
+            ResponseEntity responseEntity = route(requestEntity);
+            return responseEntity;
         } catch (Exception e) {
             return new ResponseEntity("REDIRECT ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -29,8 +46,9 @@ public class RoutingDelegate {
         return new RequestEntity<>(body, headers, httpMethod, new URI(url));
     }
 
-    private ResponseEntity<String> route(RequestEntity requestEntity) {
+    private ResponseEntity route(RequestEntity requestEntity) {
         RestTemplate restTemplate = new RestTemplate();
+        System.out.println(requestEntity.getUrl());
         return restTemplate.exchange(requestEntity, String.class);
     }
 

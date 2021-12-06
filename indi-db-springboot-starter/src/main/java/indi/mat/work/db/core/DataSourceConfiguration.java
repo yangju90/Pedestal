@@ -48,7 +48,7 @@ public class DataSourceConfiguration implements WebMvcConfigurer {
 
     // 让CustomDbFilter是单例的，如果加入网络请求，保证唯一性
     @Bean("CustomDbFilter")
-    @ConditionalOnProperty(prefix = "hydra",name = "orm",havingValue = "druid")
+    @ConditionalOnProperty(prefix = "indi",name = "orm",havingValue = "druid")
     public CustomDbFilter customDbFilter() {
         return new CustomDbFilter();
     }

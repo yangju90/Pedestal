@@ -17,4 +17,4 @@ indi:
     driverClassName: com.mysql.cj.jdbc.Driver
     dbName: mysql
     username: root
-    password: 1234
+    password: 123456

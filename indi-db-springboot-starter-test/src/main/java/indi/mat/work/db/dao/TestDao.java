@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class TestDao extends BaseDao {
 
     public void test() {
-        HashMap map = (HashMap) jdbc("mysql").queryForMap("SELECT 100", new HashMap());
+        int map = jdbc("mysql").queryForObject("SELECT 100", new HashMap<>(0), Integer.class);
         System.out.println(JsonUtil.toJsonString(map));
     }
 }
