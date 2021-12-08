@@ -35,6 +35,11 @@ public abstract class BaseTestController {
 
     @BeforeAll
     void setup() throws SQLException {
+        // MockMvcBuilders.webAppContextSetup(webApplicationContext).defaultRequest((MockMvcRequestBuilders
+                        .get("/")
+                        .header(JWT_HEADER, JwtUtil.generate(userForTest, config.getJwtSecret(), 2 * 60 * 60 * 1000L))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding(StandardCharsets.UTF_8.name())).alwaysDo(print()).build()
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         dataSource.getConnection().createStatement().execute("CREATE TABLE if not exists `user` (\n" +
                 "      `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',\n" +
