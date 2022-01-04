@@ -1,5 +1,6 @@
 package indi.mat.work.project.service.proxy;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
@@ -17,6 +18,9 @@ import java.util.List;
 
 @Service
 public class ServiceDelegate {
+
+    @Autowired
+    private RestTemplate restTemplate;
 
 
     public ResponseEntity<String> redirect(HttpServletRequest request, HttpServletResponse response, String routeUrl, String prefix) {
@@ -47,7 +51,7 @@ public class ServiceDelegate {
     }
 
     private ResponseEntity route(RequestEntity requestEntity) {
-        RestTemplate restTemplate = new RestTemplate();
+//        RestTemplate restTemplate = new RestTemplate();
         System.out.println(requestEntity.getUrl());
         return restTemplate.exchange(requestEntity, String.class);
     }
