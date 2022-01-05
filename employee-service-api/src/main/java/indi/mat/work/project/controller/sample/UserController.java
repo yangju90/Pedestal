@@ -1,11 +1,14 @@
 package indi.mat.work.project.controller.sample;
 
 import indi.mat.work.project.model.system.SystemMenu;
+import indi.mat.work.project.model.user.LoginUser;
 import indi.mat.work.project.service.sample.IUserService;
 import indi.mat.work.project.util.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,6 +61,11 @@ public class UserController {
     public Object delete(Integer id) {
         userService.delete(id);
         return "删除成功！";
+    }
+
+    @RequestMapping("/update/user")
+    public LoginUser updateUser(@Validated @RequestBody LoginUser loginUser){
+        return loginUser;
     }
 
 }

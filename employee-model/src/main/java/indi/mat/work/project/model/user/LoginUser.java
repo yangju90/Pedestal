@@ -1,8 +1,12 @@
 package indi.mat.work.project.model.user;
 
+
+import indi.mat.work.project.annotation.Email;
+
 public class LoginUser {
     private String name;
     private Long customerNumber;
+    @Email
     private String email;
 
     public String getName() {

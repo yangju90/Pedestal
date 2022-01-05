@@ -22,7 +22,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 public @interface AssertBoolean {
-    String message() default "{com.newegg.staffing.annotation.AssertBoolean.message}";
+    String message() default "{indi.mat.work.project.annotation.AssertBoolean.message}";
 
     Class<?>[] groups() default { };
 
