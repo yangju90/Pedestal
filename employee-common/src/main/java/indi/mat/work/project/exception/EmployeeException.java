@@ -1,6 +1,6 @@
 package indi.mat.work.project.exception;
 
-public class EmployeeException extends RuntimeException {
+public class EmployeeException extends BaseException {
 
     public EmployeeException(String message) {
         super(message);
@@ -12,9 +12,5 @@ public class EmployeeException extends RuntimeException {
 
     public EmployeeException(Throwable cause) {
         super(cause);
-    }
-
-    protected EmployeeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
     }
 }

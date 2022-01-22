@@ -1,5 +1,6 @@
 package indi.mat.work.project.controller.sample;
 
+import indi.mat.work.project.exception.EmployeeException;
 import indi.mat.work.project.model.system.SystemMenu;
 import indi.mat.work.project.model.user.LoginUser;
 import indi.mat.work.project.service.sample.IUserService;
@@ -65,6 +66,7 @@ public class UserController {
 
     @RequestMapping("/update/user")
     public LoginUser updateUser(@Validated @RequestBody LoginUser loginUser){
+        if(1 == 1) throw new EmployeeException("employee.login.error");
         return loginUser;
     }
 

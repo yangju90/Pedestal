@@ -3,9 +3,11 @@ package indi.mat.work.project.config;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.github.pagehelper.PageException;
+import indi.mat.work.project.exception.BadResponse;
 import indi.mat.work.project.exception.EmployeeException;
 import indi.mat.work.project.exception.ErrorInputException;
 import indi.mat.work.project.response.Response;
+import indi.mat.work.project.util.ExceptionUtils;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +39,17 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+
+//    @ExceptionHandler(EmployeeException.class)
+//    @ResponseStatus(HttpStatus.OK)
+//    public Response<Void> handleBusinessException(EmployeeException e) {
+//        return Response.FAIL(e.getMessage());
+//    }
+
     @ExceptionHandler(EmployeeException.class)
-    public Response<Void> handleBusinessException(EmployeeException e) {
-        return Response.FAIL(e.getMessage());
+    @ResponseStatus(HttpStatus.OK)
+    public BadResponse handleBusinessException(EmployeeException e) {
+        return ExceptionUtils.createBadResponse(e);
     }
 
 
