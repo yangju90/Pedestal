@@ -28,6 +28,7 @@ import static org.springdoc.core.Constants.API_DOCS_URL;
 
 @Configuration
 public class OpenApiConfig {
+    // localhost:port/swagger-ui.html
 
     @Autowired
     private ServletContext context;
