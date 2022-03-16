@@ -52,8 +52,8 @@ public class OpenApiConfig {
     }
 
     private void addSecurity(OpenAPI openApi) {
-        var components = createComponents();
-        var securityItem = new SecurityRequirement()
+        Components components = createComponents();
+        SecurityRequirement securityItem = new SecurityRequirement()
                 .addList(SCHEME_NAME)
                 .addList(Constant.WAREHOUSE_NO_HEADER)
                 .addList(Constant.PID_HEADER)
@@ -64,7 +64,7 @@ public class OpenApiConfig {
     }
 
     private Components createComponents() {
-        var components = new Components();
+        Components components = new Components();
         components.addSecuritySchemes(SCHEME_NAME, createSecurityScheme(SCHEME_NAME, SCHEME_NAME));
         components.addSecuritySchemes(Constant.WAREHOUSE_NO_HEADER, createSecurityScheme(Constant.WAREHOUSE_NO_HEADER, Constant.WAREHOUSE_NO_HEADER));
         components.addSecuritySchemes(Constant.VERSION_CODE, createSecurityScheme(Constant.VERSION_CODE, Constant.VERSION_CODE));
@@ -103,7 +103,7 @@ public class OpenApiConfig {
 
         private String defaultUrl() {
             Optional<RequestAttributes> requestAttributes = Optional.ofNullable(RequestContextHolder.getRequestAttributes());
-            if (requestAttributes.isEmpty()) {
+            if (!requestAttributes.isPresent()) {
                 return null;
             }
             HttpServletRequest request = ((ServletRequestAttributes) requestAttributes.get()).getRequest();
