@@ -15,6 +15,6 @@ indi:
     instance: test
     dbType: mysql
     driverClassName: com.mysql.cj.jdbc.Driver
-    dbName: mysql
+    dbName: test
     username: root
     password: 123456

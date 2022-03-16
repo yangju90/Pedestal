@@ -26,4 +26,10 @@ public class SpringTestApplication {
         testService.test();
         return "success";
     }
+
+    @RequestMapping("testDao1")
+    public String testDao1() {
+        testService.test1();
+        return "success";
+    }
 }

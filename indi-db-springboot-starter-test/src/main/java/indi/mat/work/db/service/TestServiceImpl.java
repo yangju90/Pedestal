@@ -14,4 +14,9 @@ public class TestServiceImpl implements TestService {
     public void test() {
         dao.test();
     }
+
+    @Override
+    public void test1() {
+        dao.test1();
+    }
 }
