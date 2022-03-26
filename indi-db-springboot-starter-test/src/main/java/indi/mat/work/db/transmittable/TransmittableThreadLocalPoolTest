@@ -1,3 +1,5 @@
+package indi.mat.work.db.transmittable;
+
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.alibaba.ttl.TtlRunnable;
 import com.alibaba.ttl.threadpool.TtlExecutors;
