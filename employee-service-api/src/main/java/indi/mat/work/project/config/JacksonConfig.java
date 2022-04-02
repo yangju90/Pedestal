@@ -20,6 +20,17 @@ public class JacksonConfig{
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         objectMapper.configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, false);
         objectMapper.configure(ACCEPT_FLOAT_AS_INT, false);
+                ObjectMapper objectMapper = builder.createXmlMapper(false)
+                //compatibility C# date pattern /Date(1335205592410)/
+//                .deserializerByType(Date.class,new JacksonCustomerDateJsonDeserializer())
+                .simpleDateFormat(DateStringConstant.fulltime)
+                .build();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES,true);
+        objectMapper.setConfig(objectMapper.getDeserializationConfig()
+                .with(JsonReadFeature.ALLOW_TRAILING_COMMA)
+                .with(JsonWriteFeature.ESCAPE_NON_ASCII));
+        
         return objectMapper;
     }
 
