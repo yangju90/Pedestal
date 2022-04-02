@@ -1,10 +1,9 @@
-package com.newegg.staffing.controller.system;
+package indi.mat.work.project.controller.system;
 
-import com.newegg.staffing.controller.BaseControllerTest;
-import com.newegg.staffing.model.system.SystemFavoritesInfo;
-import com.newegg.staffing.service.account.IAccountUserService;
-import com.newegg.staffing.service.system.ISystemFavoritesInfoService;
-import com.newegg.staffing.util.JsonUtil;
+import indi.mat.work.project.controller.BaseTestController;
+import indi.mat.work.project.model.system.SystemFavoritesInfo;
+import indi.mat.work.project.service.system.ISystemFavoritesInfoService;
+import indi.mat.work.project.util.JsonUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -29,9 +28,6 @@ public class SystemFavoritesInfoControllerTest extends BaseControllerTest {
 
     @Autowired
     private ISystemFavoritesInfoService service;
-
-    @Autowired
-    private IAccountUserService accountUserService;
 
 
     private Integer companyid = -1;
