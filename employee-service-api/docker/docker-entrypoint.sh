@@ -47,4 +47,6 @@ wget -O ./application.yml  "https://${HOST_UTL}/keeper/v2/logistics-pda-api/appl
 
 echo "JAVA_OPTS: ${JAVA_OPTS}"
 
-java ${JAVA_OPTS} -Dlogging.config="file:./logback.xml" -jar pda-api.jar${option}
+//java ${JAVA_OPTS} -Dlogging.config="file:./logback.xml" -jar pda-api.jar${option}
+java ${JAVA_OPTS} -Dlogging.config="file:./logback.xml" -Dspring.config.location="file:/tmp/application.yml" -DLOCATION=${location} -jar app.jar${option}
+
