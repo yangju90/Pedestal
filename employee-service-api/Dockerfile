@@ -1,5 +1,5 @@
 # docker build --pull -t java/logistics-demo:<tag> .
-FROM harbor.newegg.org/base/openjdk:11-jdk-alpine
+FROM base/openjdk:11-jdk-alpine
 VOLUME /tmp
 ENV TZ=America/Los_Angeles
 COPY docker/ ./
