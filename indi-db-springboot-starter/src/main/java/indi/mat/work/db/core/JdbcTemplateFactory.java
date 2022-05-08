@@ -80,7 +80,7 @@ public class JdbcTemplateFactory implements ApplicationContextAware {
         //source.setNotFullTimeoutRetryCount(-1);
         //source.setConnectionErrorRetryAttempts(-1);
         source.setNotFullTimeoutRetryCount(1);
-        source.setConnectionErrorRetryAttempts(2)
+        source.setConnectionErrorRetryAttempts(2);
         source.setBreakAfterAcquireFailure(false);
         if(isContain("CustomDbFilter")){
             List<Filter> filterList = new ArrayList<>();
