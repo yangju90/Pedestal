@@ -1,3 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-indi.mat.work.db.core.DataSourceConfiguration,\
+indi.mat.work.mq.core.MqTracingConfiguration,\
 indi.mat.work.db.core.DataSourceConfiguration
