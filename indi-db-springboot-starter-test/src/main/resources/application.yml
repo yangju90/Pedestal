@@ -5,7 +5,7 @@ indi:
   service-id: indi.mat.work.db
   service-aop : execution(* indi.mat.work.db.service.*.*(..))
   kafka-producer:
-    "[bootstrap.servers]": 119.3.252.151:9092
+    "[bootstrap.servers]": 119.3.252.151:9092,119.3.252.151:8080
     topic: test
   db:
     maxActive: 5

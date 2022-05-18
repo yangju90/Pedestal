@@ -26,7 +26,7 @@ import java.util.Properties;
 @EnableConfigurationProperties({MqProperties.class})
 @ConditionalOnClass(WebMvcConfigurer.class)
 @Configuration
-@ConditionalOnProperty(prefix = "hydra",name = "enable",matchIfMissing = true)
+@ConditionalOnProperty(prefix = "indi",name = "enable",matchIfMissing = true)
 @Aspect
 public class MqTracingConfiguration implements WebMvcConfigurer {
 
@@ -35,7 +35,7 @@ public class MqTracingConfiguration implements WebMvcConfigurer {
 
     @Bean
     @ConditionalOnMissingBean(MqMessageSender.class)
-    public MqMessageSender hydraMessageSender() {
+    public MqMessageSender mqMessageSender() {
         Properties properties = new Properties();
         properties.putAll(mqProperties.getKafkaProducer());
         properties.remove("topic");
@@ -44,9 +44,9 @@ public class MqTracingConfiguration implements WebMvcConfigurer {
     }
 
     @Bean("MqDruidFilter")
-    @ConditionalOnProperty(prefix = "hydra",name = "orm",havingValue = "druid")
+    @ConditionalOnProperty(prefix = "indi",name = "orm",havingValue = "druid")
     public MqDruidFilter mqDruidFilter() {
-        return new MqDruidFilter(hydraMessageSender());
+        return new MqDruidFilter(mqMessageSender());
     }
 
     @Override
@@ -54,7 +54,7 @@ public class MqTracingConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(new MqGatewayRequestHeaderInterceptor());
     }
 
-    @Bean
+    @Bean("mq_Advisor")
     public Advisor txAdviceAdvisor() {
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
         pointcut.setExpression(mqProperties.getServiceAop());

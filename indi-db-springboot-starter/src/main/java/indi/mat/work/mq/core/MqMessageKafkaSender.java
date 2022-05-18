@@ -22,14 +22,14 @@ import java.util.*;
  */
 public class MqMessageKafkaSender implements MqMessageSender {
 
-    private KafkaProducer<String, String> hydraKafkaProducer;
+    private KafkaProducer<String, String> mqKafkaProducer;
 
     private MqProperties mqProperties;
 
     private final Log LOG = LogFactory.getLog(getClass());
 
-    public MqMessageKafkaSender(KafkaProducer<String, String> hydraKafkaProducer, MqProperties mqProperties) {
-        this.hydraKafkaProducer = hydraKafkaProducer;
+    public MqMessageKafkaSender(KafkaProducer<String, String> mqKafkaProducer, MqProperties mqProperties) {
+        this.mqKafkaProducer = mqKafkaProducer;
         this.mqProperties = mqProperties;
     }
 
@@ -74,7 +74,7 @@ public class MqMessageKafkaSender implements MqMessageSender {
         String keyMes = JsonUtil.toJsonString(kafkaKeyBean);
         String body = JsonUtil.toJsonString(mes);
         if (StringUtils.hasText(keyMes) && StringUtils.hasText(body)) {
-            hydraKafkaProducer.send(new ProducerRecord<>(String.valueOf(mqProperties.getKafkaProducer().get("topic")), keyMes, body), new HydraKafkaProducerCallback(keyMes, body, LOG));
+            mqKafkaProducer.send(new ProducerRecord<>(String.valueOf(mqProperties.getKafkaProducer().get("topic")), keyMes, body), new HydraKafkaProducerCallback(keyMes, body, LOG));
         }
     }
 

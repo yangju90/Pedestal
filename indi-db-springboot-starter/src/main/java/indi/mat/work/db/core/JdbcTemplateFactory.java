@@ -4,6 +4,7 @@ import com.alibaba.druid.filter.Filter;
 import com.alibaba.druid.pool.DruidDataSource;
 import indi.mat.work.db.filter.CustomDbFilter;
 import indi.mat.work.db.util.DbConfigUtil;
+import indi.mat.work.mq.filter.MqDruidFilter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -85,6 +86,7 @@ public class JdbcTemplateFactory implements ApplicationContextAware {
         if(isContain("CustomDbFilter")){
             List<Filter> filterList = new ArrayList<>();
             filterList.add(getBean(CustomDbFilter.class));
+            filterList.add(getBean(MqDruidFilter.class));
             source.setProxyFilters(filterList);
         }
         return source;

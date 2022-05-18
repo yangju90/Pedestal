@@ -10,7 +10,7 @@ import java.util.Map;
  * <p>
  *
  */
-@ConfigurationProperties(prefix = "hydra")
+@ConfigurationProperties(prefix = "indi")
 @Component
 public class MqProperties {
     private boolean enable;

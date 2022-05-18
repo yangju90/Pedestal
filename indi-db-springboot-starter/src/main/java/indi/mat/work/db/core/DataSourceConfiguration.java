@@ -33,7 +33,7 @@ public class DataSourceConfiguration implements WebMvcConfigurer {
         return new JdbcTemplateFactory();
     }
 
-    @Bean
+    @Bean("db_Advisor")
     public Advisor txAdviceAdvisor(){
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
         pointcut.setExpression(dbProperties.getServiceAop());
