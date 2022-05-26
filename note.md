@@ -8,10 +8,6 @@ https://lotabout.me/2020/OAuth-2-workflow/
 
 ## Rbac
 
-https://blog.csdn.net/zwk626542417/article/details/4672
-
-
-
 
 
 ```java
