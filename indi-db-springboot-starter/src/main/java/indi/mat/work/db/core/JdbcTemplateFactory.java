@@ -63,8 +63,54 @@ public class JdbcTemplateFactory implements ApplicationContextAware {
 //            DruidDataSource dataSource = createDataSource(DbConfigUtil.fillUrl(getBean(dbName, DataSourceConfig.class)));
             DruidDataSource dataSource = createDataSource(DbConfigUtil.fillUrl(getBean(DataSourceConfig.class)));
             registerBean(dbName+ "DRUID_DATA_SOURCE", dataSource , DruidDataSource.class);
+            registerBean(dbName + "TRANSACTION", createTransactionTemplate(dataSource), TransactionTemplate.class);
             return dataSource;
         }
+    }
+    
+    private static synchronized TransactionTemplate createTransactionTemplate(DataSource dataSource) {
+        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager(dataSource);
+        TransactionTemplate transactionTemplate = new TransactionTemplate(dataSourceTransactionManager);
+        transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+        return transactionTemplate;
+    }
+
+    public static synchronized TransactionTemplate transaction(String dbName) {
+        if (!StringUtils.hasText(dbName)) {
+            throw new DbException("dbName is null");
+        }
+        if (isContain(dbName + "TRANSACTION")) {
+            return getBean(dbName + "TRANSACTION", TransactionTemplate.class);
+        } else {
+            getJdbc(dbName);
+            return getBean(dbName + "TRANSACTION", TransactionTemplate.class);
+        }
+    }
+
+
+    public static synchronized DataAccessStrategy getAccess(String dbName) {
+        if (!StringUtils.hasText(dbName)) {
+            throw new DbException("dbName is null");
+        }
+        if (dataAccessStrategyMap.containsKey(dbName)) {
+            return dataAccessStrategyMap.get(dbName);
+        } else {
+            return createAccessStrategy(dbName);
+        }
+    }
+
+
+    private static DataAccessStrategy createAccessStrategy(String dbName) {
+        JdbcMappingContext context = getBean(JdbcMappingContext.class);
+        NamedParameterJdbcTemplate jdbcTemplate = getJdbc(dbName);
+        DefaultJdbcTypeFactory jdbcTypeFactory = new DefaultJdbcTypeFactory(jdbcTemplate.getJdbcOperations());
+        JdbcCustomConversions conversions = getBean(JdbcCustomConversions.class);
+        DelegatingDataAccessStrategy strategy = new DelegatingDataAccessStrategy();
+        JdbcConverter jdbcConverter = new BasicJdbcConverter(context, strategy, conversions, jdbcTypeFactory, SqlServerDialect.INSTANCE.getIdentifierProcessing());
+        DefaultDataAccessStrategy defaultDataAccessStrategy = new DefaultDataAccessStrategy(new SqlGeneratorSource(context, jdbcConverter, SqlServerDialect.INSTANCE), context, jdbcConverter, jdbcTemplate);
+        strategy.setDelegate(defaultDataAccessStrategy);
+        dataAccessStrategyMap.put(dbName, strategy);
+        return strategy;
     }
 
     private static DruidDataSource createDataSource(DataSourceConfig config){
