@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class SystemFavoritesInfoControllerTest extends BaseControllerTest {
+public class SystemFavoritesInfoControllerTest extends BaseTestController {
 
     private static final String PREFIX = "/api/system/favorites/info/list";
 
@@ -75,30 +75,30 @@ public class SystemFavoritesInfoControllerTest extends BaseControllerTest {
     }
 
 
-    @Test
-    @Order(3)
-    void testUpdateForm() throws Exception {
-
-        List<SystemFavoritesInfo> list =service.selectList(null);
-        if(list.size() == 0) return;
-        Long id = list.get(0).getId();
-
-        SystemFavoritesInfo old = service.selectById(id);
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        map.put("accountId", "1");
-        map.put("favoriteBusinessType", "COMPANY");
-        map.put("businessTypeFavoriteId", companyid - 1);
-
-        mvc.perform(put(PREFIX)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.toJsonString(map)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message", is("success")));
-
-        SystemFavoritesInfo nld = service.selectById(id);
-        assertNotEquals(old.getBusinessTypeFavoriteId(), nld.getBusinessTypeFavoriteId());
-    }
+//    @Test
+//    @Order(3)
+//    void testUpdateForm() throws Exception {
+//
+//        List<SystemFavoritesInfo> list =service.selectList(null);
+//        if(list.size() == 0) return;
+//        Long id = list.get(0).getId();
+//
+//        SystemFavoritesInfo old = service.selectById(id);
+//        HashMap<String, Object> map = new HashMap<>();
+//        map.put("id", id);
+//        map.put("accountId", "1");
+//        map.put("favoriteBusinessType", "COMPANY");
+//        map.put("businessTypeFavoriteId", companyid - 1);
+//
+//        mvc.perform(put(PREFIX)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(JsonUtil.toJsonString(map)))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.message", is("success")));
+//
+//        SystemFavoritesInfo nld = service.selectById(id);
+//        assertNotEquals(old.getBusinessTypeFavoriteId(), nld.getBusinessTypeFavoriteId());
+//    }
 
 
     @Test
@@ -154,21 +154,21 @@ public class SystemFavoritesInfoControllerTest extends BaseControllerTest {
     }
 
 
-    @Test
-    @Order(100)
-    void testDeleteId() throws Exception {
-
-        List<SystemFavoritesInfo> list =service.selectList(null);
-        if(list.size() == 0) return;
-        Long id = list.get(0).getId();
-
-        mvc.perform(delete(PREFIX + "/{id}", id)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message", is("success")));
-
-        SystemFavoritesInfo nld = service.selectById(id);
-        assertEquals(null, nld);
-    }
+//    @Test
+//    @Order(100)
+//    void testDeleteId() throws Exception {
+//
+//        List<SystemFavoritesInfo> list =service.selectList(null);
+//        if(list.size() == 0) return;
+//        Long id = list.get(0).getId();
+//
+//        mvc.perform(delete(PREFIX + "/{id}", id)
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.message", is("success")));
+//
+//        SystemFavoritesInfo nld = service.selectById(id);
+//        assertEquals(null, nld);
+//    }
 
 }

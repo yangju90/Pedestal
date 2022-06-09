@@ -1,7 +1,11 @@
 package indi.mat.work.project.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.json.JsonReadFeature;
+import com.fasterxml.jackson.core.json.JsonWriteFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import indi.mat.work.project.util.DateStringConstant;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +21,16 @@ public class JacksonConfig{
     @Primary
     @ConditionalOnMissingBean(ObjectMapper.class)
     public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
-        ObjectMapper objectMapper = builder.createXmlMapper(false).build();
-        objectMapper.configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, false);
-        objectMapper.configure(ACCEPT_FLOAT_AS_INT, false);
-                ObjectMapper objectMapper = builder.createXmlMapper(false)
+        ObjectMapper objectMapper = builder.createXmlMapper(false)
                 //compatibility C# date pattern /Date(1335205592410)/
 //                .deserializerByType(Date.class,new JacksonCustomerDateJsonDeserializer())
                 .simpleDateFormat(DateStringConstant.fulltime)
                 .build();
+
+//        ObjectMapper objectMapper = builder.createXmlMapper(false).build();
+        objectMapper.configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, false);
+        objectMapper.configure(ACCEPT_FLOAT_AS_INT, false);
+
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES,true);
         objectMapper.setConfig(objectMapper.getDeserializationConfig()

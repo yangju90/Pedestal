@@ -35,7 +35,7 @@ elif [ ${location} == 'gqc' ]; then
   HOST_UTL="apis-gqc.xx.com"
 elif [ ${location} == 'sandbox' ]; then
   HOST_UTL="sandboxapis.xx.com"
-elif [[ ${location} == prd* ]]; then
+elif [[ ${location} == 'prd' ]]; then
   HOST_UTL="apis.xx.com"
 else
   echo "location is error !"
