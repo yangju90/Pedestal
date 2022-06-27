@@ -4,15 +4,23 @@ import indi.mat.work.project.exception.EmployeeException;
 import indi.mat.work.project.model.system.SystemMenu;
 import indi.mat.work.project.model.user.LoginUser;
 import indi.mat.work.project.service.sample.IUserService;
+import indi.mat.work.project.util.Constant;
 import indi.mat.work.project.util.JsonUtil;
+import indi.mat.work.project.websocket.LoginResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.support.RequestContext;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,6 +31,26 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @RequestMapping("/login")
+    public Object login(String user, String pwd){
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession();
+        session.setAttribute(Constant.WS_USER, user);
+        LoginResult result = new LoginResult();
+        result.setUser(user);
+        result.setFlag(true);
+        result.setMessage("success");
+        return result;
+    }
+
+    @RequestMapping("/getUsername")
+    public Object getUsername(){
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession();
+        String username = (String) session.getAttribute(Constant.WS_USER);
+        return username;
+    }
 
 
     @RequestMapping("/get")

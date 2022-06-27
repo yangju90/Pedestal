@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/jquery.min.js"></script>
+<body>
+<form id="loginForm">
+    <label>账号：</label>
+    <input type="text" name="user">
+    <label>密码：</label>
+    <input type="password" name="pwd">
+    <button type="button" id="btn">登录</button>
+</form>
+
+<script>
+  $("#btn").click(function () {
+        $.get("login?",$("#loginForm").serialize(),function(res){
+            if (res.flag){
+                console.log(res);
+                location.href = "home.html";
+            } else {
+                console.log(res);
+                $("#err_msg").html(res.message);
+            }
+        },"json");
+    })
+
+</script>
+</body>
+</html>

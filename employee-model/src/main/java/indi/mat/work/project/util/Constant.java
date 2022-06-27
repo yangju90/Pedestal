@@ -17,4 +17,7 @@ public class Constant {
     /** TraceSpanId */
     public static final String SID = "x-gateway-sid";
 
+
+    public static final String WS_USER = "user";
+
 }
