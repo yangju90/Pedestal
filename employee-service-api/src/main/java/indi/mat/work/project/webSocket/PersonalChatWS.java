@@ -35,9 +35,10 @@ public class PersonalChatWS {
     @OnMessage
     public void onMessage(String message, Session session){
         try {
-            System.out.println(message);
+            System.out.println("fromMesg:" + message);
             Message ms = JsonUtil.jsonToObject(message, Message.class);
-            Message userMessage = new Message(false, ms.getToName(), ms.getMessage());
+            Message userMessage = new Message(false, (String)httpSession.getAttribute(Constant.WS_USER), ms.getMessage());
+            System.out.println("toMesg:" + JsonUtil.toJsonString(userMessage));
             connectWs.get(ms.getToName()).getBasicRemote().sendText(JsonUtil.toJsonString(userMessage));
         } catch (IOException e) {
             logger.error(this.httpSession.getAttribute(Constant.WS_USER) + " send Message error!", e);
@@ -70,6 +71,12 @@ public class PersonalChatWS {
 
     @OnClose
     public void onClose(Session session, CloseReason closeReason) {
+        String username = (String) httpSession.getAttribute(Constant.WS_USER);
+        //从容器中删除指定的用户
+        connectWs.remove(username);
+        Message sysMessage = new Message(true, null, Arrays.asList(connectWs.keySet().toArray(new String[]{})));
+        String message = JsonUtil.toJsonString(sysMessage);
+        broadcast(message);
     }
 
     @OnError

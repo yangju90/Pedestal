@@ -122,14 +122,14 @@
             }else {
                 //不是系统消息
                 var str = "<span id='mes_left'>"+ res.message +"</span></br>";
-                if (toName == res.fromName)
+                if (toName == res.toName)
                 $("#content").append(str);
 
-                var chatdata = sessionStorage.getItem(res.fromName);
+                var chatdata = sessionStorage.getItem(res.toName);
                 if (chatdata != null){
                     str = chatdata + str;
                 }
-                sessionStorage.setItem(res.fromName,str);
+                sessionStorage.setItem(res.toName,str);
 
             };
         },
