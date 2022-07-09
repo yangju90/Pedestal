@@ -2,3 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 indi.mat.work.mq.core.MqTracingConfiguration,\
 indi.mat.work.db.core.DataSourceConfiguration,\
 indi.mat.work.monitor.FaqEndpointAutoConfiguration
+
+org.springframework.boot.env.EnvironmentPostProcessor=indi.mat.work.environment.K8sEnvironmentPostProcessor
