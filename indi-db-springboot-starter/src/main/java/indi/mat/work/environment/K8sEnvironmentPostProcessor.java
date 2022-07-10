@@ -28,7 +28,7 @@ public class K8sEnvironmentPostProcessor implements EnvironmentPostProcessor {
                 Map<String, OriginTrackedValue> source = (Map)propertySource.getSource();
                 Map<String, OriginTrackedValue> newConfig = new HashMap(source);
                 OriginTrackedValue applicationName = (OriginTrackedValue)source.get("spring.application.name");
-                if (applicationName != null && ((OriginTrackedValue)source.get("spring.application.name")).getValue() != null && !StringUtils.isBlank(((Class)((OriginTrackedValue)source.get("spring.application.name")).getValue()).makeConcatWithConstants<invokedynamic>(((OriginTrackedValue)source.get("spring.application.name")).getValue()))) {
+                if (applicationName != null && ((OriginTrackedValue)source.get("spring.application.name")).getValue() != null) {
                     if (!newConfig.containsKey("management.endpoint.health.probes.enabled")) {
                         newConfig.put("management.endpoint.health.probes.enabled", OriginTrackedValue.of(true));
                     }

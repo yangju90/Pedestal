@@ -1,4 +1,6 @@
-
+spring:
+  application:
+    name: indi-db-springboot
 indi:
   enable: true
   orm: druid
