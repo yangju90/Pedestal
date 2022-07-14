@@ -1,10 +1,10 @@
 create table if not exists `student`(
-                                        `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-                                        `name` VARCHAR(20)  DEFAULT NULL COMMENT '姓名',
-                                        `subject` VARCHAR(20)  DEFAULT NULL COMMENT '班级',
-                                        `class` VARCHAR(20)  DEFAULT NULL COMMENT '学科',
-                                        `score` INT  DEFAULT NULL COMMENT '分数',
-                                        PRIMARY KEY (`id`)
+    `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `name` VARCHAR(20)  DEFAULT NULL COMMENT '姓名',
+    `subject` VARCHAR(20)  DEFAULT NULL COMMENT '班级',
+    `class` VARCHAR(20)  DEFAULT NULL COMMENT '学科',
+    `score` INT  DEFAULT NULL COMMENT '分数',
+    PRIMARY KEY (`id`)
 );
 
 insert into student (name,class,subject, score) values ('mat','01', '数学', FLOOR(1 + (RAND() * 101)));
