@@ -6,8 +6,9 @@ import javax.validation.constraints.Size;
 
 public abstract class BaseForm {
 
-    @NonNull
-    @Size
+    /** 自增主键 */
+    @Min(1)
+    @Schema(description = "update operation  is required ; add operation please ignore")
     private Long id;
 
     public Long getId() {
