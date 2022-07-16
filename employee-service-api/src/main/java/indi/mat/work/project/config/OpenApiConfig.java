@@ -42,7 +42,7 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI apiDocs() {
         OpenAPI openApi = new CustomOpenAPI()
-                .info(new Info().title("Newegg Pda api").description("Newegg Pda api").version("1.0"));
+                .info(new Info().title("Employee api").description("Employee api").version("1.0"));
         openApi.addServersItem(newServer("https://GDEV-HOST/employee", "GDEV"))
                 .addServersItem(newServer("https://GQC-HOST/employee", "GQC"))
                 .addServersItem(newServer("https://PRE-HOST/employee", "PRE"))
