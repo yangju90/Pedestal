@@ -1,7 +1,11 @@
 package indi.mat.work.project.controller.system;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import indi.mat.work.project.model.system.SystemMenu;
+import indi.mat.work.project.request.query.system.SystemMenuQuery;
+import indi.mat.work.project.response.Response;
 import indi.mat.work.project.service.system.ISystemMenuService;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +25,12 @@ public class SystemMenuController {
     @GetMapping("list")
     public List<SystemMenu> get() {
         return systemMenuService.selectAll();
+    }
+
+    @GetMapping("query")
+    public Response<IPage<SystemMenu>> get(@ParameterObject SystemMenuQuery systemMenuQuery){
+        IPage<SystemMenu> page =  systemMenuService.queryPage(systemMenuQuery);
+        return Response.SUCCESS(page);
     }
 
     @DeleteMapping
