@@ -1,4 +1,3 @@
-# docker build --pull -t java/logistics-demo:<tag> .
 FROM base/openjdk:11-jdk-alpine
 VOLUME /tmp
 ENV TZ=America/Los_Angeles

@@ -19,22 +19,22 @@
     </properties>
 
     <groupId>indi.mat.work.project</groupId>
-    <artifactId>employee</artifactId>
+    <artifactId>Pedestal</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
     <modules>
-        <module>employee-model</module>
-        <module>employee-common</module>
-        <module>employee-service-api</module>
-        <module>employee-persist</module>
-        <module>employee-service</module>
+        <module>Pedestal-model</module>
+        <module>Pedestal-common</module>
+        <module>Pedestal-service-api</module>
+        <module>Pedestal-persist</module>
+        <module>Pedestal-service</module>
         <module>helper</module>
         <module>indi-db-springboot-starter</module>
         <module>indi-db-springboot-starter-test</module>
     </modules>
 
-    <name>employee</name>
+    <name>Pedestal</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 

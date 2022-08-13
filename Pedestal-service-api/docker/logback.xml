@@ -2,7 +2,7 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"ServiceName":"employee","type":"service-api"}</customFields>
+            <customFields>{"ServiceName":"Pedestal","type":"service-api"}</customFields>
         </encoder>
     </appender>
 
