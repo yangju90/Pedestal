@@ -1,13 +1,12 @@
 package indi.mat.work.project.util;
 
-import sun.security.rsa.RSAPrivateCrtKeyImpl;
-import sun.security.rsa.RSAPublicKeyImpl;
-
 import javax.crypto.Cipher;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 public class RSAUtil {
@@ -44,7 +43,9 @@ public class RSAUtil {
         byte[] result = null;
         try {
             byte[] bytes = decryptBase64(key);
-            PublicKey publicKey = RSAPublicKeyImpl.newKey(bytes);
+            X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(bytes);
+            KeyFactory keyFactory = KeyFactory.getInstance(KEY_RSA);
+            PublicKey publicKey = keyFactory.generatePublic(encodedKeySpec);
 
             Cipher cipher = Cipher.getInstance(KEY_RSA);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
@@ -60,7 +61,9 @@ public class RSAUtil {
         String result = null;
         try {
             byte[] bytes = decryptBase64(key);
-            PrivateKey privateKey = RSAPrivateCrtKeyImpl.newKey(bytes);
+            PKCS8EncodedKeySpec encodedKeySpec = new PKCS8EncodedKeySpec(bytes);
+            KeyFactory keyFactory = KeyFactory.getInstance(KEY_RSA);
+            PrivateKey privateKey = keyFactory.generatePrivate(encodedKeySpec);
 
             Cipher cipher = Cipher.getInstance(KEY_RSA);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
@@ -85,6 +88,7 @@ public class RSAUtil {
         System.out.println("公钥加密======私钥解密");
         String str = "Longer程序员";
         String[] rsaCypher = RSAUtil.init();
+
 
         byte[] enStr = RSAUtil.encryptByPublicKey(str, rsaCypher[0]);
         String miyaoStr = new String(enStr, StandardCharsets.ISO_8859_1);
