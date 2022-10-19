@@ -121,3 +121,13 @@ create table if not exists `indi_system_favorites_info` (
 
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COMMENT='菜单表';
+
+
+create table if not exists `indi_lock` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '逻辑主键',
+
+    `lock_name` varchar(20) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT charset=utf8mb4 COMMENT='菜单表';
+

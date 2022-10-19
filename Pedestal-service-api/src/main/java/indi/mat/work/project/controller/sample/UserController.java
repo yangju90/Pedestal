@@ -1,6 +1,7 @@
 package indi.mat.work.project.controller.sample;
 
 import indi.mat.work.project.exception.EmployeeException;
+import indi.mat.work.project.lock.DistributionLock;
 import indi.mat.work.project.model.system.SystemMenu;
 import indi.mat.work.project.model.user.LoginUser;
 import indi.mat.work.project.service.sample.IUserService;
@@ -12,17 +13,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.RequestContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class UserController {
@@ -31,6 +32,11 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private DistributionLock lock;
+
+    private AtomicLong atomicLong = new AtomicLong();
 
     @RequestMapping("/login")
     public Object login(String user, String pwd){
@@ -98,4 +104,24 @@ public class UserController {
         return loginUser;
     }
 
+
+    @GetMapping("/lockId/{id}")
+    public Long[] getLockId(@PathVariable("id")long f){
+        Connection connection = lock.lock();
+        Long[] res = new Long[2];
+        try{
+            res[0] = f;
+            res[1] = getUuid();
+        }catch (Exception e){
+            throw  new EmployeeException("GetLockId Error");
+        }finally {
+            lock.unlock(connection);
+        }
+
+        return res;
+    }
+
+    private Long getUuid(){
+        return atomicLong.getAndIncrement();
+    }
 }
