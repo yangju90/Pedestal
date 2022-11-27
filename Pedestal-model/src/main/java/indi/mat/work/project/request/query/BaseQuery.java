@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.pagehelper.PageException;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public abstract class BaseQuery<T>{
     private Long current;
     private String order;
 
+    @JsonIgnore
+    @Schema(hidden = true)
     private Wrapper<T> wrapper;
 
     protected QueryWrapper<T> queryWrapper(){
@@ -95,6 +98,7 @@ public abstract class BaseQuery<T>{
     }
 
     @JsonIgnore
+    @Schema(hidden = true)
     public Wrapper<T> wrapper() {
         setCustomerCondition();
         if(wrapper == null){

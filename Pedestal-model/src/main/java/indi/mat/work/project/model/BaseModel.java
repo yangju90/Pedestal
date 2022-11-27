@@ -1,25 +1,35 @@
 package indi.mat.work.project.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class BaseModel implements Serializable {
     // ID
+    @TableId
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
     // 逻辑删除 1 为删除 0 为正常
-    private boolean deleted;
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private boolean deleted = false;
 
     // 插入记录的用户名
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String opUser;
 
     // 插入记录的时间
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Date opDate;
 
     // 最后一次修改的用户名
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String lastOpUser;
 
     // 最后一次修改的时间
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Date lastOpDate;
 
     public Long getId() {
