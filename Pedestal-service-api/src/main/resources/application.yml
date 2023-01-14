@@ -8,6 +8,10 @@ spring:
         jdbc-url: jdbc:mysql://localhost:3306/employee?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
         username: root
         password: 123456
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 mybatis-plus:
   configuration:
@@ -39,7 +43,7 @@ indi:
     jwt:
       secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
       
-debug: false
+debug: true
 
 # yml 文件在IDEA中build不会复制到target文件中， 但是Maven compile 可以，考虑rebuild 项目以Maven project形式（Maven -> reimport）
 
