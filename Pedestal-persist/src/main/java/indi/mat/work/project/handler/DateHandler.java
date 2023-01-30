@@ -20,11 +20,19 @@ public class DateHandler extends BaseTypeHandler<Date> {
     //将 jdbc 类型转 java 类型
     @Override
     public Date getNullableResult(ResultSet resultSet, String s) throws SQLException {
+        Object object = resultSet.getObject(s);
+        if(object instanceof Date) {
+            return (Date) object;
+        }
         return new Date(resultSet.getLong(s));
     }
 
     @Override
     public Date getNullableResult(ResultSet resultSet, int i) throws SQLException {
+        Object object = resultSet.getObject(i);
+        if(object instanceof Date) {
+            return (Date) object;
+        }
         return new Date(resultSet.getLong(i));
     }
 
