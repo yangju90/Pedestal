@@ -1,5 +1,8 @@
 package indi.mat.work.project.sse;
 
+import groovyjarjarantlr.collections.Enumerator;
+import indi.mat.work.project.util.JsonUtil;
+import nonapi.io.github.classgraph.json.JSONUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -9,9 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static indi.mat.work.project.util.Constant.JWT_HEADER;
 
 /**
  * @author Mat
@@ -26,10 +34,10 @@ public class SseController {
     /**
      * 创建连接
      *
-     * @date: 2022/7/12 14:51
+     * @date: 2022/3/31 20:51
      */
     @GetMapping(path = "sseConnect/{userId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter connect(@PathVariable String userId) {
+    public SseEmitter connect(@PathVariable String userId, HttpServletRequest request) {
         try {
             // 设置超时时间，0表示不过期。默认30秒
             SseEmitter sseEmitter = new SseEmitter(0L);
@@ -54,7 +62,7 @@ public class SseController {
     /**
      * 给指定用户发送消息
      *
-     * @date: 2022/7/12 14:51
+     * @date: 2022/3/31 21:51
      */
     @GetMapping(path = "sseSend")
     public void sendMessage(String userId, String message) {

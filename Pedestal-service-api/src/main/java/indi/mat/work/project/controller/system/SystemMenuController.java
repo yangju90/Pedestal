@@ -1,6 +1,7 @@
 package indi.mat.work.project.controller.system;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sun.org.apache.xml.internal.utils.Hashtree2Node;
 import indi.mat.work.project.model.system.SystemMenu;
 import indi.mat.work.project.request.query.system.SystemMenuQuery;
 import indi.mat.work.project.response.Response;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.TreeMap;
+import java.util.logging.Handler;
 
 @RestController
 @RequestMapping("/api/system/menu")
@@ -48,6 +51,7 @@ public class SystemMenuController {
     @RequestMapping("/deleteByName")
     public Object delete(String name) {
         systemMenuService.deleteName(name);
+
         return "删除成功！";
     }
 
