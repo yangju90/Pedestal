@@ -23,14 +23,20 @@ public class UserServiceImpl implements IUserService {
     }
 
     @CacheEvict(value = "user", key = "#id")
-    public void delete(Integer id) {
+    public void delete(Long id) {
         System.out.println("删除key为[" + id + "]的缓存");
     }
 
-    @Cacheable(value = "user", key = "#id", sync = true)
-    public User getById(Integer id) {
-        System.out.println("操作数据库，进行通过ID查询，ID: " + id);
-        return new User(id, "admin", "123", 18);
+//    @Cacheable(value = "user", key = "#id", sync = true)
+    public User getById(Long id) {
+        return mapper.selectById(id);
     }
+
+    @Override
+    public Boolean save(User user) {
+        return mapper.insert(user) > 0;
+    }
+
+
 
 }

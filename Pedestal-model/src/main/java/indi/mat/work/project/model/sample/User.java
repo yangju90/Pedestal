@@ -1,31 +1,39 @@
 package indi.mat.work.project.model.sample;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import indi.mat.work.project.handler.DateHandler;
+import org.apache.ibatis.type.JdbcType;
+
+import java.util.Date;
 
 @TableName("user")
 public class User {
 
-    private Integer id;
+    private Long id;
     private String name;
     private String email;
     private Integer age;
     private Boolean favorite;
 
+    @TableField(typeHandler = DateHandler.class, jdbcType = JdbcType.ARRAY)
+    private Date loginDate;
+
     public User() {}
 
-    public User(Integer id, String name, String email, Integer age) {
+    public User(Long id, String name, String email, Integer age) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,5 +67,13 @@ public class User {
 
     public void setFavorite(Boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public Date getLoginDate() {
+        return loginDate;
+    }
+
+    public void setLoginDate(Date loginDate) {
+        this.loginDate = loginDate;
     }
 }

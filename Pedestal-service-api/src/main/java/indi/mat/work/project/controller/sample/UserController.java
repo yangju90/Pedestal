@@ -2,6 +2,7 @@ package indi.mat.work.project.controller.sample;
 
 import indi.mat.work.project.exception.EmployeeException;
 import indi.mat.work.project.lock.DistributionLock;
+import indi.mat.work.project.model.sample.User;
 import indi.mat.work.project.model.system.SystemMenu;
 import indi.mat.work.project.model.user.LoginUser;
 import indi.mat.work.project.service.sample.IUserService;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -48,6 +50,16 @@ public class UserController {
         result.setFlag(true);
         result.setMessage("success");
         return result;
+    }
+
+
+    @RequestMapping("/add")
+    public Object add(){
+        User u =new User();
+        u.setAge(10);
+        u.setLoginDate(new Date());
+        u.setName("zhangsan");
+        return userService.save(u);
     }
 
     @RequestMapping("/getUsername")
@@ -88,12 +100,12 @@ public class UserController {
     }
 
     @RequestMapping("/getById")
-    public Object getById(Integer id) {
+    public Object getById(Long id) {
         return userService.getById(id);
     }
 
     @RequestMapping("/delete")
-    public Object delete(Integer id) {
+    public Object delete(Long id) {
         userService.delete(id);
         return "删除成功！";
     }

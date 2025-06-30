@@ -12,13 +12,16 @@ public interface IUserService {
      * 删除id用户
      * @param id
      */
-    public void delete(Integer id);
+    void delete(Long id);
 
     /**
      * 查询id用户，若有缓存查缓存
      * @param id
      * @return
      */
-    public User getById(Integer id);
+    User getById(Long id);
+
+
+    Boolean save(User user);
 
 }

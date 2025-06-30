@@ -51,7 +51,7 @@ public class SystemMenuServiceImpl extends BaseServiceImpl<SystemMenu, SystemMen
     @Cacheable(value = "user", key = "#name")
     public User get(String name) {
         System.out.println("system操作数据库，进行通过name查询，Name: " + name);
-        return new User(1, "admin", "123", 18);
+        return new User(1L, "admin", "123", 18);
     }
 
     @Override
